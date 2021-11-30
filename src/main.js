@@ -1,13 +1,27 @@
-import Vue from 'vue'
-import App from './App.vue'
-import './registerServiceWorker'
-import router from './router'
-import store from './store'
+import Vue from "vue";
+import App from "./App.vue";
+import "./registerServiceWorker";
+import router from "./router";
+import store from "./store";
+import Vant from "vant";
+import "vant/lib/index.css";
+import "lib-flexible";
+import "./less/index.less";
+import { Lazyload } from "vant";
+import "./less/iconfont.css";
+import VueAwesomeSwiper from "vue-awesome-swiper";
+import "./utils/dayjs";
+import "swiper/css/swiper.css";
 
-Vue.config.productionTip = false
+Vue.use(VueAwesomeSwiper /* { default options with global component } */);
+Vue.use(Vant);
+Vue.use(Lazyload, {
+  lazyCompile: true,
+});
+Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
-  render: h => h(App)
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");
