@@ -12,7 +12,10 @@ import "./less/iconfont.css";
 import VueAwesomeSwiper from "vue-awesome-swiper";
 import "./utils/dayjs";
 import "swiper/css/swiper.css";
+import { ImagePreview } from "vant";
 
+// 全局注册
+Vue.use(ImagePreview);
 Vue.use(VueAwesomeSwiper /* { default options with global component } */);
 Vue.use(Vant);
 Vue.use(Lazyload, {

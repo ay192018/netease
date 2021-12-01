@@ -15,7 +15,7 @@
         <van-icon name="ellipsis" slot="right" size="23" color="#e4e4e4" />
       </div>
     </van-nav-bar>
-    <div class="songsmaterial">
+    <div class="songsmaterial" ref="imgurl">
       <div class="left">
         <van-image
           class="userimgs"
@@ -97,6 +97,7 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 import { getrsonginfo } from "@/api/find.js";
+import { ImagePreview } from "vant";
 export default {
   name: "songsinfo",
 
@@ -118,6 +119,9 @@ export default {
         .then(({ data }) => {
           this.playlist = data.playlist;
           this.tracks = data.playlist.tracks;
+          this.$nextTick(() => {
+            this.img();
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -138,11 +142,12 @@ export default {
       // console.log(this.tracks[this.currentPlay].id);
       this.$store.commit("setplaylist", this.tracks);
       this.$nextTick(() => {
-        this.ref.play();
-        this.ref.autoplay = true;
+        if (this.ref.paused) {
+          this.ref.play();
+          this.ref.autoplay = true;
+          this.$store.commit("switchPlayPause", !this.isPlaying);
+        }
       });
-
-      this.$store.commit("switchPlayPause", !this.isPlaying);
 
       this.$store.commit(
         "setintvalID",
@@ -151,6 +156,22 @@ export default {
       this.setcurrentPlay(index);
     },
     ...mapMutations(["setcurrentPlay"]),
+    img() {
+      const imgurl = this.$refs["imgurl"];
+
+      let imgs = imgurl.querySelectorAll("img");
+      // console.log(imgs);
+      const imgPath = [];
+      imgs.forEach((img, index) => {
+        imgPath.push(img.src);
+        img.addEventListener("click", () => {
+          ImagePreview({
+            images: imgPath,
+            startPosition: index,
+          });
+        });
+      });
+    },
   },
   created() {
     this.getrsonginfo();

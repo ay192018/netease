@@ -29,8 +29,11 @@ export default {
   methods: {
     getaudio(index) {
       this.$nextTick(() => {
-        this.ref.play();
-        this.ref.autoplay = true;
+        if (this.ref.paused) {
+          this.ref.play();
+          this.ref.autoplay = true;
+          this.$store.commit("switchPlayPause", !this.isPlaying);
+        }
       });
       this.$store.commit("switchPlayPause", !this.isPlaying);
       this.$store.commit("setplaylist", this.searchlist);
@@ -38,7 +41,7 @@ export default {
         "setintvalID",
         this.$store.state.playlist[this.currentPlay].id
       );
-      this.$store.dispatch("requestLyric", this.intvalID);
+      // this.$store.dispatch("requestLyric", this.intvalID);
       this.setcurrentPlay(index);
     },
     ...mapMutations(["setcurrentPlay"]),

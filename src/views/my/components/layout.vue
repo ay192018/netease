@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div class="layout" v-if="token">
     <van-cell
       title="退出登录"
       clickable

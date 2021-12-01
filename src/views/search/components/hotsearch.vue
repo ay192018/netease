@@ -20,6 +20,7 @@
 <script>
 export default {
   name: "hotsearch",
+ 
   props: {
     hotsearch: {
       type: Array,

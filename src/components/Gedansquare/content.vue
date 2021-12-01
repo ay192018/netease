@@ -94,6 +94,7 @@ export default {
   height: 80vh;
   overflow-y: auto;
   margin-left: 15px;
+  margin-top: 12px;
 }
 .swiper-slide {
   width: 100px;

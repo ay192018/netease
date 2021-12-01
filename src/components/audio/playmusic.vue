@@ -100,6 +100,7 @@ export default {
   components: {
     Comment,
   },
+
   data() {
     return {
       show: false, //弹出层开关
@@ -113,6 +114,7 @@ export default {
       hotComments: [], //最热评论
     };
   },
+
   computed: {
     ...mapState([
       "playlist",

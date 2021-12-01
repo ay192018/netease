@@ -55,6 +55,7 @@ body {
   background-color: #fefefe;
   width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
 }
 ::-webkit-scrollbar {
   display: none;

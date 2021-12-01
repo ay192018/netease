@@ -110,17 +110,17 @@ export default {
 
       // this.paused = this.$refs.getaudio.paused;
     },
-    switchPlayPause() {
-      if (this.$refs.getaudio.paused) {
-        this.$refs.getaudio.play();
-        this.$store.commit("switchPlayPause", !this.isPlaying);
-        // console.log("播放");
-      } else {
-        this.$refs.getaudio.pause();
-        this.$store.commit("switchPlayPause", !this.isPlaying);
-        // console.log("暂停");
-      }
-    },
+    // switchPlayPause() {
+    //   if (this.$refs.getaudio.paused) {
+    //     this.$refs.getaudio.play();
+    //     this.$store.commit("switchPlayPause", !this.isPlaying);
+    //     // console.log("播放");
+    //   } else {
+    //     this.$refs.getaudio.pause();
+    //     this.$store.commit("switchPlayPause", !this.isPlaying);
+    //     // console.log("暂停");
+    //   }
+    // },
     rotate() {
       let rotateVal = 0;
       let img = this.$refs.img;

@@ -105,11 +105,11 @@ export default new Vuex.Store({
       state.userxinxi = data;
     },
     getcookie(state, data) {
-      console.log(1);
+      // console.log(1);
       state.cookie = data;
     },
     islogin(state) {
-      console.log(1);
+      // console.log(1);
       state.login = 200;
     },
     // getprofile(state, data) {

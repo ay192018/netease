@@ -95,6 +95,7 @@ export default {
   }
   .components {
     height: 80vh;
+    overflow-x: hidden;
     overflow-y: auto;
   }
 }
