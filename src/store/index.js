@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { getrsongeci } from "@/api/find.js";
 
 Vue.use(Vuex);
 // let defaultMusic = {
@@ -31,23 +30,16 @@ Vue.use(Vuex);
 //   },
 // };
 let defaultMusic = {
-  name: "Black Magic",
-  id: 1805317558,
+  name: "哪里都是你2.0",
+  id: 1363642136,
   ar: [
     {
-      id: 28527997,
-      name: "Jonasu",
-      tns: [],
-      alias: [],
+      name: "队长",
     },
   ],
   al: {
-    id: 120609644,
-    name: "Black Magic",
-    pic: 109951165549454430,
     picUrl:
-      "http://p3.music.126.net/KFS9Z18U07UQKuhXWaFZOg==/109951165549454434.jpg",
-    pic_str: "109951165549454434",
+      "http://p4.music.126.net/dcPHOdEv_27Xk56CDBox4w==/109951164055238135.jpg",
   },
 };
 export default new Vuex.Store({
@@ -66,9 +58,13 @@ export default new Vuex.Store({
     token: JSON.parse(window.localStorage.getItem("token")), //token
     profile: JSON.parse(window.localStorage.getItem("profile")), //profile
     userxinxi: {}, //用户详情信息
+    currtime: "", //当前音乐时间
   },
 
   mutations: {
+    currtime(state, time) {
+      state.currtime = time;
+    },
     setplaylist(state, data) {
       state.playlist = data;
     },
@@ -96,6 +92,10 @@ export default new Vuex.Store({
       state.searchlist = data;
     },
     setsearchhistory(state, data) {
+      const index = state.searchhistory.indexOf(data);
+      if (index !== -1) {
+        state.searchhistory.splice(index, 1);
+      }
       state.searchhistory.unshift(data);
     },
     qingkongsearchhistory(state, data) {
@@ -120,35 +120,11 @@ export default new Vuex.Store({
     // },
   },
   actions: {
-    async requestLyric(content, options) {
-      // console.log(content, options);
-      let { data } = await getrsongeci(options);
-
-      content.commit("setLyric", data.lrc.lyric);
-    },
+    // async requestLyric(content, options) {
+    //   // console.log(content, options);
+    //   let { data } = await getrsongeci(options);
+    //   content.commit("setLyric", data.lrc.lyric);
+    // },
   },
   modules: {},
-  // getters: {
-  //   currentMusic(state) {
-  //     return state.playList[state.currentIndex];
-  //   },
-  //   Lyriclist(state) {
-  //     let Lyrics = state.Lyric.split(/\n/gis).map((item, index, arr) => {
-  //       let min = parseInt(item.slice(1, 3));
-  //       let sec = parseInt(item.slice(4, 6));
-  //       let mill = parseInt(item.slice(7, 10));
-
-  //       return {
-  //         min,
-  //         sec,
-  //         mill,
-  //         Lyric: item.slice(12, item.length),
-  //         content: item,
-  //         time: mill + sec * 1000 + min * 60 * 1000,
-  //       };
-  //     });
-
-  //     return Lyrics;
-  //   },
-  // },
 });

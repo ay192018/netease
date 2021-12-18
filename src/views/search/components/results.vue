@@ -26,23 +26,25 @@ import { mapMutations, mapState } from "vuex";
 export default {
   name: "results",
   props: {},
+  beforeCreate() {},
   methods: {
     getaudio(index) {
       this.$nextTick(() => {
         if (this.ref.paused) {
           this.ref.play();
           this.ref.autoplay = true;
-          this.$store.commit("switchPlayPause", !this.isPlaying);
+          if (this.isPlaying == false) {
+            this.$store.commit("switchPlayPause");
+          }
         }
       });
-      this.$store.commit("switchPlayPause", !this.isPlaying);
+
       this.$store.commit("setplaylist", this.searchlist);
+      this.setcurrentPlay(index);
       this.$store.commit(
         "setintvalID",
         this.$store.state.playlist[this.currentPlay].id
       );
-      // this.$store.dispatch("requestLyric", this.intvalID);
-      this.setcurrentPlay(index);
     },
     ...mapMutations(["setcurrentPlay"]),
   },
@@ -73,7 +75,7 @@ export default {
     .songname {
       text-overflow: ellipsis;
       white-space: nowrap;
-      overflow: hidden;
+      overflow-x: hidden !important;
     }
   }
 }

@@ -2,25 +2,34 @@
   <div class="comment">
     <div class="comments">评论区</div>
     <van-tabs v-model="active" animated>
-      <van-tab title="最新">
+      <van-tab title="推荐">
         <div
           class="everycomments"
-          v-for="(item, index) in comment"
+          v-for="(item, index) in tuijiancooments"
           :key="index"
         >
           <div class="info">
             <div class="left">
-              <van-image
-                width="30"
-                height="30"
-                round
-                fit="cover"
-                :src="item.user.avatarUrl"
-              />
-
+              <router-link
+                :to="{
+                  name: 'PersonalCenter',
+                  params: {
+                    id: item.user.userId,
+                  },
+                }"
+              >
+                <van-image
+                  width="30"
+                  height="30"
+                  round
+                  fit="cover"
+                  :src="item.user.avatarUrl"
+                  @click="show"
+                />
+              </router-link>
               <div class="title">
                 <div class="username">{{ item.user.nickname }}</div>
-                <div class="fabutime">{{ item.time | datetime  }}</div>
+                <div class="fabutime">{{ item.time | datetime }}</div>
               </div>
             </div>
 
@@ -34,6 +43,48 @@
           </div>
         </div>
       </van-tab>
+      <van-tab title="最新">
+        <div
+          class="everycomments"
+          v-for="(item, index) in comment"
+          :key="index"
+        >
+          <div class="info">
+            <div class="left">
+              <router-link
+                :to="{
+                  name: 'PersonalCenter',
+                  params: {
+                    id: item.user.userId,
+                  },
+                }"
+              >
+                <van-image
+                  width="30"
+                  height="30"
+                  round
+                  fit="cover"
+                  :src="item.user.avatarUrl"
+                  @click="show"
+                />
+              </router-link>
+              <div class="title">
+                <div class="username">{{ item.user.nickname }}</div>
+                <div class="fabutime">{{ item.time | datetime }}</div>
+              </div>
+            </div>
+
+            <div class="likecount">
+              {{ item.likedCount }}<van-icon name="good-job-o" slot size="25" />
+            </div>
+          </div>
+
+          <div class="content">
+            {{ item.content }}
+          </div>
+        </div>
+      </van-tab>
+
       <van-tab title="最热">
         <div
           class="everycomments"
@@ -42,14 +93,23 @@
         >
           <div class="info">
             <div class="left">
-              <van-image
-                width="30"
-                height="30"
-                round
-                fit="cover"
-                :src="item.user.avatarUrl"
-              />
-
+              <router-link
+                :to="{
+                  name: 'PersonalCenter',
+                  params: {
+                    id: item.user.userId,
+                  },
+                }"
+              >
+                <van-image
+                  width="30"
+                  height="30"
+                  round
+                  fit="cover"
+                  :src="item.user.avatarUrl"
+                  @click="show"
+                />
+              </router-link>
               <div class="title">
                 <div class="username">{{ item.user.nickname }}</div>
                 <div class="fabutime">{{ item.time | datetime }}</div>
@@ -98,6 +158,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "comment",
+
   data() {
     return {
       active: 0,
@@ -111,6 +172,10 @@ export default {
       required: true,
     },
     hotComments: {
+      type: Array,
+      required: true,
+    },
+    tuijiancooments: {
       type: Array,
       required: true,
     },
@@ -134,6 +199,11 @@ export default {
         console.log(error);
         this.$toast.fail("评论失败,请登录");
       }
+    },
+    show() {
+      this.$attrs.close();
+      this.$attrs.closes();
+      console.log(this.$attrs);
     },
   },
   computed: {
@@ -160,8 +230,10 @@ export default {
 .comment {
   width: 95vw;
   margin: 50px auto;
+  background: transparent;
   .everycomments {
     margin-top: 10px;
+    background: transparent;
   }
   .info {
     display: flex;
@@ -206,6 +278,12 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  /deep/ .van-cell,
+  .van-cell--clickable,
+  .van-cell--borderless {
+    font-size: 12px;
+    background: transparent;
   }
 }
 </style>

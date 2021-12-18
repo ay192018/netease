@@ -43,7 +43,8 @@ export default {
 
 <style lang="less" scoped>
 .layout {
-  width: 95vw;
+  margin-bottom: 150px;
+  width: 50vw;
   margin: auto;
 
   .layoutlogin {

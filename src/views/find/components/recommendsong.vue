@@ -21,7 +21,9 @@ export default {};
 
 <style lang="less" scoped>
 .song {
+  background: transparent;
   /deep/ .van-cell {
+    background: transparent;
     padding: 0;
     /deep/ .van-cell__title {
       font-weight: 800;

@@ -40,10 +40,10 @@ export default {
     async onSubmit() {
       //   console.log("submit", values);
       const { data } = await getlogin(this.phone, this.password);
-      console.log(data);
+
       if (data.code === 200) {
         this.$toast.success("登录成功");
-
+        console.log(data, 1);
         // this.$store.commit("getcookie", data.cookie);
 
         // this.$store.commit("gettoken", data.token);
@@ -55,7 +55,7 @@ export default {
         // window.localStorage.setItem("userId", data.profile.userId);
 
         //   this.$store.commit("getcookie");
-        location.reload();
+        window.location.reload();
         this.$router.push("/my");
       } else {
         this.$toast.fail("登录失败");

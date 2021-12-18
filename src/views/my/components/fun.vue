@@ -64,7 +64,7 @@ export default {
   height: 120px;
   border-radius: 15px;
   margin-top: 15px;
-  background-color: #ccc;
+ background: transparent;
 
   ul {
     display: flex;

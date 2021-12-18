@@ -89,15 +89,30 @@ export default {
   justify-content: center;
   border-radius: 18px;
   font-size: 15px;
+  text-align: justify;
   margin-right: 5px;
-  color: #fff;
+  color: #fdceed;
+  min-width: auto;
+  background-image: -moz-linear-gradient(
+    90deg,
+    rgb(208, 241, 251),
+    rgb(254, 220, 205)
+  );
+
+  background-image: -webkit-linear-gradient(
+    90deg,
+    rgb(208, 241, 251),
+    rgb(254, 220, 205)
+  );
+
+  background-image: linear-gradient(
+    90deg,
+    rgb(208, 241, 251),
+    rgb(254, 220, 205)
+  );
+  width: auto !important;
 }
 
-.swiper-slide {
-  color: #000;
-  font-size: 15px;
-  background-color: #f8f8f8;
-}
 .title {
   font-size: 15px;
 }

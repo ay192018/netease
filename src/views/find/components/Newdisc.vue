@@ -81,6 +81,7 @@ export default {
 .Newdisc {
   width: 100vw;
   margin-left: 10px;
+  background: transparent;
 }
 
 .swiper-slide {
@@ -109,5 +110,11 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+/deep/ .van-cell {
+  background: transparent;
+}
+.title {
+  height: 40px;
 }
 </style>

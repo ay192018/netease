@@ -39,8 +39,8 @@
       :style="{ height: '100%', width: '50%' }"
       round
     >
-      个人信息1!!！！！！！！！!!!!! 施工中</van-popup
-    >
+      <Layout></Layout>
+    </van-popup>
   </div>
 </template>
 
@@ -50,6 +50,7 @@ import Songtitle from "./components/recommendsong.vue";
 import Recommendedlist from "./components/recommendedlist.vue";
 import List from "./components/recommendlist.vue";
 import Newdisc from "./components/Newdisc.vue";
+import Layout from "@/views/my/components/layout.vue";
 export default {
   name: "find",
   components: {
@@ -58,6 +59,7 @@ export default {
     Songtitle,
     Recommendedlist,
     Newdisc,
+    Layout,
   },
   data() {
     return {
@@ -75,7 +77,23 @@ export default {
 <style lang="less" scoped>
 .find {
   .app-nav-bar {
-    background: linear-gradient(90deg, rgb(254, 255, 179), rgb(213, 184, 255));
+    background-image: -moz-linear-gradient(
+      135deg,
+      rgb(205, 253, 254),
+      rgb(252, 207, 248)
+    );
+
+    background-image: -webkit-linear-gradient(
+      135deg,
+      rgb(205, 253, 254),
+      rgb(252, 207, 248)
+    );
+
+    background-image: linear-gradient(
+      135deg,
+      rgb(205, 253, 254),
+      rgb(252, 207, 248)
+    );
     margin-bottom: 20px;
     .searchbtn {
       /deep/ .van-nav-bar__title {

@@ -1,8 +1,16 @@
 import http from "@/utils/http.js";
-export const gethotcomment = (id, limit = 100000) => {
+export const gethotcomment = (params) => {
   return http({
     method: "GET",
-    url: `/comment/music?id=${id}&limit=${limit}`,
+    url: `/comment/music`,
+    params,
+  });
+};
+export const getnewcomment = (params) => {
+  return http({
+    method: "GET",
+    url: "/comment/new",
+    params,
   });
 };
 export const gethuifucomment = (cookie, id, content) => {
@@ -17,5 +25,13 @@ export const gethuifucomment = (cookie, id, content) => {
       id: id,
       content: content,
     },
+  });
+};
+export const getlike = (params) => {
+  return http({
+    method: "GET",
+    // url: `/comment?t=${t}&type=${type}&id=${id}&content=${content}`,
+    url: "/like",
+    params,
   });
 };

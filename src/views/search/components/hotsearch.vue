@@ -12,6 +12,12 @@
         <div class="name" :class="{ hot: index < 3 }">
           {{ item.searchWord }}
         </div>
+        <van-icon
+          name="fire-o"
+          color="#ee0a24"
+          class="icon"
+          v-if="index == 0"
+        />
       </div>
     </div>
   </div>
@@ -20,7 +26,7 @@
 <script>
 export default {
   name: "hotsearch",
- 
+
   props: {
     hotsearch: {
       type: Array,
@@ -29,7 +35,7 @@ export default {
   },
   methods: {
     gosearch(item) {
-      console.log(item);
+      // console.log(item);
       this.$parent.value = item;
       this.$parent.onSearch(item);
     },
@@ -59,15 +65,31 @@ export default {
       .number {
         width: 12%;
         margin-right: 5px;
+        font-size: 12px;
+        vertical-align: middle;
       }
       .active {
-        color: #9effe0;
+        color: red;
+        font-weight: bold;
       }
       .hot {
+        font-size: 15px;
         font-weight: bold;
-        color: #ffccc2;
+        color: #cfd2fc;
       }
     }
+  }
+  .name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+  /deep/ .icon,
+  .van-icon,
+  .van-icon-fire-o {
+    margin-left: 5px;
+    vertical-align: middle;
   }
 }
 </style>

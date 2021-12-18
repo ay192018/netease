@@ -1,6 +1,6 @@
 <template>
   <div class="Swipe">
-    <van-swipe :autoplay="1000" :duration="300" indicator-color="#fff">
+    <van-swipe :autoplay="2000" :duration="300" indicator-color="#fff">
       <van-swipe-item v-for="(image, index) in images" :key="index">
         <img :src="image.pic" />
       </van-swipe-item>
@@ -46,6 +46,9 @@ export default {
       width: 100%;
       height: 150px;
     }
+  }
+  /deep/ .van-swipe {
+    border-radius: 15px;
   }
 }
 </style>

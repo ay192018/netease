@@ -2,14 +2,23 @@
   <div class="userinfo">
     <div class="ziliaol" v-if="token">
       <div style="text-align: center">
-        <van-image
-          class="toux"
-          width="60"
-          height="60"
-          round
-          fit="cover"
-          :src="profile.avatarUrl"
-        />
+        <router-link
+          :to="{
+            name: 'PersonalCenter',
+            params: {
+              id: profile.userId,
+            },
+          }"
+        >
+          <van-image
+            class="toux"
+            width="60"
+            height="60"
+            round
+            fit="cover"
+            :src="profile.avatarUrl"
+          />
+        </router-link>
         <div class="lijilogin">{{ profile.nickname }}</div>
         <div class="xinxi">
           <span>{{ profile.follows }}关注</span>
@@ -82,7 +91,7 @@ export default {
     width: 95vw;
     height: 100px;
     margin: auto;
-    background: #ccc;
+    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;

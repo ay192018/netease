@@ -37,6 +37,12 @@ const routes = [
     ],
   },
   {
+    path: "/PersonalCenter/:id",
+    name: "PersonalCenter",
+    component: () => import("@/components/PersonalCenter/"),
+    props: true,
+  },
+  {
     path: "/songsinfo/:id",
     name: "songsinfo",
     component: () => import("@/components/songsinfo.vue"),
@@ -51,6 +57,16 @@ const routes = [
     path: "/Gedansquare",
     name: "Gedansquare",
     component: () => import("@/components/Gedansquare/"),
+  },
+  {
+    path: "/everysongs",
+    name: "everysongs",
+    component: () => import("@/components/everysongs/"),
+  },
+  {
+    path: "/Ranking",
+    name: "Ranking",
+    component: () => import("@/components/Ranking/"),
   },
 ];
 

@@ -16,7 +16,7 @@
             </div>
             <div class="count">{{ item.playCount | handleNum }}</div>
           </router-link>
-          <div class="title van-multi-ellipsis--l2">{{ item.name }}</div>
+          <div class="title">{{ item.name }}</div>
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@ export default {
         num = (num / 100000000).toFixed(2);
         return num + "亿";
       } else if (num > 10000) {
-        num = (num / 1000).toFixed(2);
+        num = (num / 10000).toFixed(2);
         return num + "万";
       } else {
         return num;
@@ -64,6 +64,7 @@ export default {
   height: 120px;
   overflow-x: auto;
   overflow-y: hidden;
+  background: transparent;
 }
 .swiper {
   width: 100px;
@@ -71,7 +72,6 @@ export default {
 
 .swiper-slide {
   margin-right: 10px;
-  position: relative;
 }
 .pic {
   width: 100%;
@@ -88,4 +88,5 @@ export default {
   top: 5px;
   color: antiquewhite;
 }
+
 </style>

@@ -3,14 +3,18 @@
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <img
-            class="fimg"
-            src="./网易云图标/Snipaste_2021-11-28_21-19-56.png"
-            alt=""
-          />
+          <router-link to="everysongs">
+            <div class="icons">
+              <img
+                class="fimg"
+                src="./网易云图标/Snipaste_2021-11-28_21-30-52.png"
+                alt=""
+              />
+            </div>
+          </router-link>
           <span>每日推荐</span>
         </div>
-        <div class="swiper-slide">
+        <div class="swiper-slide" @click="personal">
           <div class="icons">
             <img src="./网易云图标/Snipaste_2021-11-28_21-30-52.png" alt="" />
           </div>
@@ -27,9 +31,11 @@
         </div>
 
         <div class="swiper-slide">
-          <div class="icons">
-            <img src="./网易云图标/Snipaste_2021-11-28_21-20-19.png" alt="" />
-          </div>
+          <router-link to="Ranking">
+            <div class="icons">
+              <img src="./网易云图标/Snipaste_2021-11-28_21-20-19.png" alt="" />
+            </div>
+          </router-link>
           <span>排行榜</span>
         </div>
         <div class="swiper-slide">
@@ -68,8 +74,43 @@
 </template>
 
 <script>
+import { getfindlist, getpersonal } from "@/api/find.js";
+import { mapMutations, mapState } from "vuex";
 export default {
   name: "list",
+  data() {
+    return {
+      findlist: [],
+    };
+  },
+  methods: {
+    async getfindlist() {
+      const { data } = await getfindlist();
+      // console.log(data);
+      this.findlist = data.data;
+    },
+    async personal() {
+      const { data } = await getpersonal();
+
+      this.$store.commit("setplaylist", data.data);
+
+      if (this.ref.paused) {
+        this.ref.play();
+
+        if (this.isPlaying == false) {
+          this.$store.commit("switchPlayPause");
+        }
+      }
+
+      this.$store.commit("setintvalID", this.$store.state.playlist[0].id);
+    },
+  },
+  created() {
+    this.getfindlist();
+  },
+  computed: {
+    ...mapState(["currentPlay", "intvalID", "isPlaying", "ref", "playlist"]),
+  },
 };
 </script>
 
@@ -77,6 +118,7 @@ export default {
 .list {
   border-bottom-color: #f6f6f6 1px solid;
   overflow-x: auto;
+  background: transparent;
 }
 .swiper {
   width: 50px;
@@ -101,6 +143,9 @@ export default {
   margin-bottom: 5px;
 }
 .fimg {
+  width: 100%;
+  height: 100%;
+
   margin-left: 5px;
   margin-bottom: 1px;
 }

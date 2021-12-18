@@ -24,6 +24,31 @@ export default {
 
 <style lang="less" scoped>
 .layout {
+  background: transparent;
+  /deep/ .van-hairline--top-bottom,
+  .van-tabbar,
+  .van-tabbar--fixed {
+    background: transparent;
+  }
+  /deep/ .van-tabbar-item--active {
+    background-image: -moz-linear-gradient(
+      135deg,
+      rgb(255, 204, 205),
+      rgb(208, 251, 249)
+    ) !important;
+
+    background-image: -webkit-linear-gradient(
+      135deg,
+      rgb(255, 204, 205),
+      rgb(208, 251, 249)
+    ) !important;
+
+    background-image: linear-gradient(
+      135deg,
+      rgb(255, 204, 205),
+      rgb(208, 251, 249)
+    ) !important;
+  }
 }
 </style>
 >

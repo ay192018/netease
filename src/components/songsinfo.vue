@@ -37,7 +37,9 @@
               fit="cover"
               :src="playlist.creator.avatarUrl"
             />
+
             <span class="username">{{ playlist.creator.nickname }}</span>
+
             <van-button round type="info" size="mini" color="#666565">
               <van-icon name="plus" slot="icon" />
             </van-button>
@@ -73,34 +75,42 @@
         <van-icon name="success" color="#6c6c6c" size="18" class="gou" />
       </div>
     </div>
-    <div class="allist" v-for="(songs, index) in tracks" :key="index">
-      <div class="index">{{ index + 1 }}</div>
-      <van-cell
-        :label="`${songs.ar[0].name}-${songs.name}`"
-        clickable
-        @click="getaudio(songs, index)"
-      >
-        <template #title>
-          <span class="songname">{{ songs.name }}</span>
-          <span class="songname" v-if="songs.alia.length === 1"
-            >({{ songs.alia[0] }})</span
-          >
-        </template>
-        <template #right-icon>
-          <van-icon name="ellipsis" size="18" />
-        </template>
-      </van-cell>
+    <div class="box">
+      <div class="allist" v-for="(songs, index) in tracks" :key="index">
+        <div class="index">{{ index + 1 }}</div>
+        <van-cell
+          :label="`${songs.ar[0].name}-${songs.name}`"
+          clickable
+          @click="getaudio(songs, index)"
+          class="list"
+        >
+          <template #title>
+            <span class="songname">{{ songs.name }}</span>
+            <span class="songname" v-if="songs.alia.length === 1"
+              >({{ songs.alia[0] }})</span
+            >
+          </template>
+          <template #right-icon>
+            <van-icon name="ellipsis" size="18" />
+          </template>
+        </van-cell>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from "vuex";
-import { getrsonginfo } from "@/api/find.js";
+import { getrsonginfo, getallsonginfo } from "@/api/find.js";
 import { ImagePreview } from "vant";
 export default {
   name: "songsinfo",
-
+  beforeCreate() {
+    this.$toast.loading({
+      message: "加载中...",
+      forbidClick: true,
+    });
+  },
   data() {
     return {
       playlist: {}, //歌单信息
@@ -109,7 +119,7 @@ export default {
   },
   props: {
     id: {
-      type: [String, Number, String],
+      type: [String, Number, Array],
       required: true,
     },
   },
@@ -126,6 +136,11 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+      getallsonginfo(this.id)
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch((err) => {});
     },
     // getallsonginfo() {
     //   getallsonginfo(this.id)
@@ -144,18 +159,19 @@ export default {
       this.$nextTick(() => {
         if (this.ref.paused) {
           this.ref.play();
-          this.ref.autoplay = true;
-          this.$store.commit("switchPlayPause", !this.isPlaying);
+
+          if (this.isPlaying == false) {
+            this.$store.commit("switchPlayPause");
+          }
         }
       });
-
+      this.$store.commit("setcurrentPlay", index);
       this.$store.commit(
         "setintvalID",
         this.$store.state.playlist[this.currentPlay].id
       );
-      this.setcurrentPlay(index);
     },
-    ...mapMutations(["setcurrentPlay"]),
+
     img() {
       const imgurl = this.$refs["imgurl"];
 
@@ -176,6 +192,7 @@ export default {
   created() {
     this.getrsonginfo();
     // this.getallsonginfo();
+    this.$toast.success("加载成功");
   },
 
   filters: {
@@ -201,6 +218,7 @@ export default {
 .songsinfo {
   position: relative;
   width: 100%;
+  background: transparent;
   .filterimg {
     width: 100%;
     height: 250px;
@@ -328,6 +346,18 @@ export default {
         overflow: hidden;
       }
     }
+  }
+  .list {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  /deep/.van-cell {
+    background: transparent;
+  }
+  .box {
+    height: 45vh;
+    overflow-y: auto;
   }
 }
 </style>

@@ -11,7 +11,10 @@
         />
       </div>
       <div class="songsname van-ellipsis">
-        {{ playlist[currentPlay].name }}
+        {{
+          `${playlist[currentPlay].name}--   
+             ${playlist[currentPlay].ar[0].name}`
+        }}
       </div>
     </div>
 
@@ -48,13 +51,14 @@
         get-container="body"
       >
         <van-nav-bar
-          :title="playlist[currentPlay].name"
+          :title="`${playlist[currentPlay].name}--   
+             ${playlist[currentPlay].ar[0].name}`"
           :border="false"
           ref="bg"
         >
           <van-icon
             name="arrow-down"
-            @click="show = false"
+            @click="closes"
             slot="left"
             size="23"
             color="#e4e4e4"
@@ -63,7 +67,12 @@
             <van-icon name="share-o" slot="right" size="23" color="#e4e4e4" />
           </div>
         </van-nav-bar>
-        <Playmusic :play="play" :pause="pause" />
+        <Playmusic
+          :play="play"
+          :pause="pause"
+          :closes="closes"
+          ref="Playmusic"
+        />
       </van-popup>
     </div>
   </div>
@@ -81,13 +90,14 @@ export default {
   data() {
     return {
       show: false,
+      audio: this.$refs.getaudio,
     };
   },
 
   methods: {
     play() {
       if (this.$refs.getaudio.paused) {
-        this.$store.commit("switchPlayPause", !this.isPlaying);
+        this.$store.commit("switchPlayPause");
         // console.log([this.$refs.getaudio]);
         this.$refs.getaudio.autoplay = true;
         this.$store.commit("setintvalID", this.playlist[this.currentPlay].id);
@@ -102,7 +112,7 @@ export default {
     },
     pause() {
       if (!this.$refs.getaudio.paused) {
-        this.$store.commit("switchPlayPause", !this.isPlaying);
+        this.$store.commit("switchPlayPause");
         // console.log(this.isPlaying);
         this.$refs.getaudio.pause();
       }
@@ -128,7 +138,7 @@ export default {
         rotateVal += 3;
         img.style.transform = "rotate(" + rotateVal + "deg)";
         img.style.transition = "0.1s linear";
-      }, 100);
+      }, 300);
     },
     // updatetime() {
     //   this.$store.state.intvalID = setInterval(() => {
@@ -137,6 +147,14 @@ export default {
     // },
     getContainer() {
       return document.querySelector(".getContainer");
+    },
+    closes() {
+      this.show = false;
+    },
+  },
+  watch: {
+    audio(ne, old) {
+      console.log();
     },
   },
   mounted() {
@@ -150,14 +168,34 @@ export default {
 .audio {
   border-top: 1px solid #99ffc9;
   border-bottom: 1px solid #99ffc9;
-  background: linear-gradient(90deg, rgb(253, 204, 255), rgb(153, 236, 255));
+
+  background-image: -moz-linear-gradient(
+    0deg,
+    rgb(250, 209, 229),
+    rgb(207, 236, 252)
+  );
+
+  background-image: -webkit-linear-gradient(
+    0deg,
+    rgb(250, 209, 229),
+    rgb(207, 236, 252)
+  );
+
+  background-image: linear-gradient(
+    0deg,
+    rgb(250, 209, 229),
+    rgb(207, 236, 252)
+  );
   position: fixed;
   bottom: 50px;
-  width: 100%;
+  width: 95%;
   height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 auto;
+  margin-left: 10px;
+  border-radius: 25px;
   .right {
     width: 80px;
     display: flex;
@@ -179,5 +217,14 @@ export default {
     right: 0;
     width: 30vh;
   }
+}
+/deep/ .van-nav-bar__title {
+  color: #000;
+  font-size: 12px;
+}
+
+/deep/ .van-nav-bar__content,
+.van-nav-bar {
+  background: linear-gradient(79deg, rgb(205, 254, 239), rgb(251, 208, 219));
 }
 </style>

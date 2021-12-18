@@ -20,6 +20,12 @@ export const getrsonginfo = (id) => {
     url: `/playlist/detail?id=${id}`,
   });
 };
+export const getallsonginfo = (id, limit = 3000) => {
+  return http({
+    method: "GET",
+    url: `/playlist/track/all?id=${id}&limit=${limit}`,
+  });
+};
 export const getrsongeci = (id) => {
   return http({
     method: "GET",
@@ -44,5 +50,23 @@ export const getjingxuanxindie = (cookie, limit) => {
       cookie: cookie,
       limit: limit,
     },
+  });
+};
+export const getfindlist = () => {
+  return http({
+    method: "GET",
+    url: "/homepage/dragon/ball",
+  });
+};
+export const getpersonal = () => {
+  return http({
+    method: "GET",
+    url: "/personal_fm",
+  });
+};
+export const getRanking = () => {
+  return http({
+    method: "GET",
+    url: "/toplist/detail",
   });
 };

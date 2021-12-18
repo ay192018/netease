@@ -3,17 +3,18 @@
     <Userinfo></Userinfo>
     <Fun></Fun>
     <Likemusic :userplaylist="userplaylist"></Likemusic>
-    <Gedan :userplaylist="userplaylist"></Gedan>
-    <Layout></Layout>
+    <!-- <Gedan :userplaylist="userplaylist"></Gedan> -->
+
+    <!-- <Collection :userplaylist="userplaylist"></Collection> -->
   </div>
 </template>
 
 <script>
 import Fun from "./components/fun.vue";
 import Userinfo from "./components/userinfo.vue";
-import Layout from "./components/layout.vue";
 import Likemusic from "./components/likemusic.vue";
-import Gedan from "./components/gedan.vue";
+// import Gedan from "./components/gedan.vue";
+// import Collection from "./components/Collection.vue";
 import { getusergedas, getmeirituijiangequ } from "@/api/login.js";
 import { mapState } from "vuex";
 export default {
@@ -27,8 +28,6 @@ export default {
     Userinfo,
     Fun,
     Likemusic,
-    Gedan,
-    Layout,
   },
   methods: {
     async getusergedas() {
@@ -39,7 +38,7 @@ export default {
     },
     async getmeirituijiangequ() {
       const { data } = await getmeirituijiangequ();
-      console.log(data, 1);
+      // console.log(data, 1);
     },
   },
   created() {

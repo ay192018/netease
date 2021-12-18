@@ -41,15 +41,22 @@ export default {
       console.log(data);
       this.channels = data.tags;
     },
-
   },
   created() {
     this.getGedansquare();
-    
   },
 };
 </script>
 
 <style lang="less" scoped>
-
+/deep/ .app-nav-bar,
+.van-nav-bar,
+.van-hairline--bottom {
+  background: transparent;
+}
+/deep/ .van-tabs__nav,
+.van-tabs__nav--line,
+.van-tabs__nav--complete {
+  background: transparent;
+}
 </style>

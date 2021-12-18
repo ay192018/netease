@@ -1,13 +1,6 @@
 <template>
-  <router-link
-    :to="{
-      name: 'songsinfo',
-      params: {
-        id: userplaylist[0].id,
-      },
-    }"
-  >
-    <div class="likemusic">
+  <div class="like">
+    <div class="likemusic" v-for="(item, index) in userplaylist" :key="index">
       <div class="img">
         <van-image
           class="toux"
@@ -15,15 +8,21 @@
           height="40"
           radius="15"
           fit="cover"
-          :src="userplaylist[0].coverImgUrl"
+          :src="item.coverImgUrl"
         />
       </div>
-      <div class="like">
-        <div class="Ilike">{{ userplaylist[0].name }}</div>
-        <div class="count">{{ userplaylist[0].trackCount }}首</div>
-      </div>
+      <van-cell
+        :to="{
+          name: 'songsinfo',
+          params: {
+            id: item.id,
+          },
+        }"
+        :title="item.name"
+        :label="`${item.trackCount}首, ${item.creator.nickname}`"
+      />
     </div>
-  </router-link>
+  </div>
 </template>
 
 <script>
@@ -35,6 +34,7 @@ export default {
     userplaylist: {
       type: Array,
       required: true,
+      
     },
   },
   data() {
@@ -62,23 +62,30 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.likemusic {
-  width: 95vw;
-  margin: auto;
-  height: 70px;
-  border-radius: 15px;
-  margin-top: 15px;
-  background-color: #ccc;
-  display: flex;
-  align-items: center;
-  .img {
-    margin-left: 15px;
-  }
-  .like {
-    margin-left: 15px;
-    .count {
-      margin-top: 6px;
+.like {
+  background-color: transparent;
+  padding-bottom: 100px;
+  .likemusic {
+    width: 95vw;
+    margin: auto;
+    height: 70px;
+    border-radius: 15px;
+    margin-top: 15px;
+    border: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    .img {
+      margin-left: 15px;
     }
+    .like {
+      margin-left: 15px;
+      .count {
+        margin-top: 6px;
+      }
+    }
+  }
+  /deep/ .van-cell {
+    background: transparent;
   }
 }
 </style>

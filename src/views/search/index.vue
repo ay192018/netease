@@ -8,6 +8,7 @@
         @search="onSearch"
         @cancel="$router.back()"
         @focus="isresultshow = false"
+        class="ipt"
       />
     </form>
     <Results v-if="isresultshow"></Results>
@@ -44,8 +45,17 @@ export default {
   },
   methods: {
     async onSearch(val) {
+      this.$toast.loading({
+        message: "加载中...",
+        forbidClick: true,
+      });
+      if (!val) {
+        val = this.defaultsearch;
+        this.value = this.defaultsearch;
+      }
       const { data } = await getsearchinfo(val);
       // console.log(data);
+      this.$toast.success("搜索成功");
       this.$store.commit("setsearchhistory", val);
       this.$store.commit("setsearchlist", data.result.songs);
       this.isresultshow = true;
@@ -57,7 +67,7 @@ export default {
     },
     async getdefaultsearch() {
       const { data } = await getdefaultsearch();
-      console.log(data.data);
+      // console.log(data.data);
       this.defaultsearch = data.data.showKeyword;
     },
   },
@@ -73,5 +83,15 @@ export default {
 
 <style lang="less" scoped>
 .search {
+  background: transparent;
+  /deep/ .van-search {
+    background: transparent;
+  }
+  /deep/ .van-cell {
+    background: transparent;
+  }
+  .ipt {
+    background: transparent;
+  }
 }
 </style>

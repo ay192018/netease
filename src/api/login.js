@@ -37,7 +37,7 @@ export const getusergedas = (uid) => {
   });
 };
 export const getmeirituijiangequ = () => {
-  //用户歌单
+  //每日推荐
   return http({
     method: "GET",
     url: "/recommend/songs",
