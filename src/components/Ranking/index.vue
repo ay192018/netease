@@ -68,6 +68,7 @@ export default {
       const { data } = await getRanking();
       console.log(data);
       this.Ranking = data.list;
+      this.$
     },
     add() {
       console.log(1);

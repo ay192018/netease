@@ -91,21 +91,20 @@ export default {
     },
     async personal() {
       const { data } = await getpersonal();
-
-      this.$store.commit("setplaylist", data.data);
-
-      if (this.ref.paused) {
-        this.ref.play();
-
-        if (this.isPlaying == false) {
-          this.$store.commit("switchPlayPause");
+      this.$nextTick(() => {
+        if (this.ref.paused) {
+          this.ref.play();
+          this.ref.autoplay = true;
+          if (this.isPlaying == false) {
+            this.$store.commit("switchPlayPause");
+          }
         }
-      }
-
+      });
+      this.$store.commit("setplaylist", data.data);
       this.$store.commit("setintvalID", this.$store.state.playlist[0].id);
     },
   },
-  created() {
+  mounted() {
     this.getfindlist();
   },
   computed: {

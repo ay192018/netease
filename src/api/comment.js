@@ -35,3 +35,11 @@ export const getlike = (params) => {
     params,
   });
 };
+export const getgoodjob = (params) => {
+  return http({
+    method: "GET",
+    // url: `/comment?t=${t}&type=${type}&id=${id}&content=${content}`,
+    url: "/comment/like",
+    params,
+  });
+};

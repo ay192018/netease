@@ -34,12 +34,21 @@
             </div>
 
             <div class="likecount">
-              {{ item.likedCount }}<van-icon name="good-job-o" slot size="25" />
+              {{ item.likedCount
+              }}<van-icon
+                :name="item.liked ? 'good-job' : 'good-job-o'"
+                slot
+                size="25"
+                @click="like(item)"
+              />
             </div>
           </div>
 
           <div class="content">
             {{ item.content }}
+          </div>
+          <div class="replay" v-if="item.showFloorComment !== null">
+            {{ item.showFloorComment.replyCount }}条回复>
           </div>
         </div>
       </van-tab>
@@ -75,12 +84,21 @@
             </div>
 
             <div class="likecount">
-              {{ item.likedCount }}<van-icon name="good-job-o" slot size="25" />
+              {{ item.likedCount
+              }}<van-icon
+                :name="item.liked ? 'good-job' : 'good-job-o'"
+                slot
+                size="25"
+                @click="like(item)"
+              />
             </div>
           </div>
 
           <div class="content">
             {{ item.content }}
+          </div>
+          <div class="replay" v-if="item.showFloorComment !== null">
+            {{ item.showFloorComment.replyCount }}条回复>
           </div>
         </div>
       </van-tab>
@@ -118,12 +136,20 @@
 
             <div class="likecount">
               {{ item.likedCount | handleNum
-              }}<van-icon name="good-job-o" slot size="25" />
+              }}<van-icon
+                :name="item.liked ? 'good-job' : 'good-job-o'"
+                slot
+                size="25"
+                @click="like(item)"
+              />
             </div>
           </div>
 
           <div class="content">
             {{ item.content }}
+          </div>
+          <div class="replay" v-if="item.showFloorComment !== null">
+            {{ item.showFloorComment }}条回复>
           </div>
         </div>
       </van-tab>
@@ -153,7 +179,7 @@
 </template>
 
 <script>
-import { gethuifucomment } from "@/api/comment.js";
+import { gethuifucomment, getgoodjob } from "@/api/comment.js";
 import { mapState } from "vuex";
 
 export default {
@@ -204,6 +230,17 @@ export default {
       this.$attrs.close();
       this.$attrs.closes();
       console.log(this.$attrs);
+    },
+    async like(item) {
+      const { data } = await getgoodjob({
+        id: this.intvalID,
+        cid: item.commentId,
+        t: item.liked == false ? 1 : 0,
+        type: 0,
+      });
+      item.liked = !item.liked;
+      item.liked == false ? item.likedCount-- : item.likedCount++;
+      this.$toast.success(`${item.liked == false ? "取消点赞" : "点赞"}成功`);
     },
   },
   computed: {
@@ -284,6 +321,12 @@ export default {
   .van-cell--borderless {
     font-size: 12px;
     background: transparent;
+  }
+  .replay {
+    margin-left: 35px;
+    font-size: 12px;
+    color: tomato;
+    text-decoration: underline;
   }
 }
 </style>

@@ -369,6 +369,7 @@ export default {
       border-radius: 15px;
       color: #fbd0db;
       transform: rotateX(360deg);
+
       text-shadow: 2px 2px 4px #fbd0db;
       transition: all 0.5s;
       font-size: 20px;

@@ -52,21 +52,20 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["setcurrentPlay"]),
     play(index) {
-      console.log(index);
+      // console.log(index);
       this.$store.commit("setplaylist", this.list);
       this.$nextTick(() => {
         if (this.ref.paused) {
-          this.ref.play();
           this.ref.autoplay = true;
+          this.ref.play();
           if (this.isPlaying == false) {
             this.$store.commit("switchPlayPause");
           }
         }
       });
 
-      this.setcurrentPlay(index);
+      this.$store.commit("setcurrentPlay", index);
       this.$store.commit(
         "setintvalID",
         this.$store.state.playlist[this.currentPlay].id
