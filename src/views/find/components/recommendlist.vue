@@ -2,7 +2,7 @@
   <div class="list auto">
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">
-        <div class="swiper-slide">
+        <div class="swiper-slide animate__shakeY animate__animated">
           <router-link to="everysongs">
             <div class="icons">
               <img
@@ -14,14 +14,14 @@
           </router-link>
           <span>每日推荐</span>
         </div>
-        <div class="swiper-slide" @click="personal">
+        <div class="swiper-slide animate__shakeX animate__animated" @click="personal">
           <div class="icons">
             <img src="./网易云图标/Snipaste_2021-11-28_21-30-52.png" alt="" />
           </div>
           <span>私人FM</span>
         </div>
 
-        <div class="swiper-slide">
+        <div class="swiper-slide animate__shakeY animate__animated">
           <router-link to="/Gedansquare">
             <div class="icons">
               <img src="./网易云图标/Snipaste_2021-11-28_21-20-12.png" alt="" />
@@ -30,7 +30,7 @@
           <span>歌单</span>
         </div>
 
-        <div class="swiper-slide">
+        <div class="swiper-slide animate__shakeX animate__animated">
           <router-link to="Ranking">
             <div class="icons">
               <img src="./网易云图标/Snipaste_2021-11-28_21-20-19.png" alt="" />
@@ -38,31 +38,31 @@
           </router-link>
           <span>排行榜</span>
         </div>
-        <div class="swiper-slide">
+        <div class="swiper-slide animate__shakeY animate__animated">
           <div class="icons">
             <img src="./网易云图标/Snipaste_2021-11-28_21-20-28.png" alt="" />
           </div>
           <span>直播</span>
         </div>
-        <div class="swiper-slide">
+        <div class="swiper-slide animate__shakeX animate__animated">
           <div class="icons">
             <img src="./网易云图标/Snipaste_2021-11-28_21-20-28.png" alt="" />
           </div>
           <span>数字专辑</span>
         </div>
-        <div class="swiper-slide">
+        <div class="swiper-slide animate__shakeX animate__animated">
           <div class="icons">
             <img src="./网易云图标/Snipaste_2021-11-28_21-20-12.png" alt="" />
           </div>
           <span>专注冥想</span>
         </div>
-        <div class="swiper-slide">
+        <div class="swiper-slide animate__shakeX animate__animated">
           <div class="icons">
             <img src="./网易云图标/Snipaste_2021-11-28_21-19-56.png" alt="" />
           </div>
           <span>歌房</span>
         </div>
-        <div class="swiper-slide">
+        <div class="swiper-slide animate__shakeY animate__animated">
           <div class="icons">
             <img src="./网易云图标/Snipaste_2021-11-28_21-19-56.png" alt="" />
           </div>

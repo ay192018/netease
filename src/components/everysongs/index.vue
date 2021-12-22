@@ -7,7 +7,7 @@
       fixed
       :border="false"
     />
-    <van-image width="100vw" height="200" :src="list[random].al.picUrl" />
+    <van-image width="100vw" height="200" :src="list[random].al.picUrl" class="animate__rubberBand  animate__animated" />
     <Songs :list="list"></Songs>
   </div>
 </template>

@@ -14,6 +14,7 @@
       <van-cell
         clickable
         v-for="(item, index) in list"
+        :class="index%2===0?'animate__animated animate__jello':'animate__animated animate__swing'"
         :key="index"
         @click="play(index)"
       >

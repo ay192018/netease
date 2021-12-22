@@ -11,7 +11,7 @@
           }"
         >
           <van-image
-            class="toux"
+            class="toux  animate__zoomInLeft animate__animated"
             width="60"
             height="60"
             round
@@ -30,7 +30,7 @@
     <div class="ziliao" v-else>
       <div style="text-align: center" @click="show = true">
         <van-image
-          class="toux"
+          class="toux animate__zoomInLeft animate__animated"
           width="60"
           height="60"
           round
@@ -98,7 +98,7 @@ export default {
   }
   .toux {
     position: absolute;
-    top: -20px;
+    top: -35px;
     left: 50%;
     transform: translate(-50%);
   }

@@ -68,6 +68,12 @@ const routes = [
     name: "Ranking",
     component: () => import("@/components/Ranking/"),
   },
+  {
+    path: "/userprofile/:id",
+    name: "userprofile",
+    component: () => import("@/components/userprofile/"),
+    props: true,
+  },
 ];
 
 const router = new VueRouter({

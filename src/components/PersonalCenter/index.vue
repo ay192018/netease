@@ -24,8 +24,22 @@
       />
       <div class="lijilogin">{{}}</div>
       <div class="xinxi">
-        <span>{{ data.profile.followeds }}关注</span>
+       <router-link :to="{
+            name:'userprofile',
+            params: {
+              id:this.id,
+            }
+       }">
+        <span >{{ data.profile.followeds }}关注</span>
+       </router-link>
+        <router-link :to="{
+            name:'userprofile',
+            params: {
+              id:this.id,
+            }
+       }">
         <span>{{ data.profile.follows }}粉丝</span>
+        </router-link>
         <span>Lv.{{ data.level }}</span>
       </div>
       <div class="all">
