@@ -76,7 +76,7 @@
       </div>
     </div>
     <div class="box">
-      <div class="allist" v-for="(songs, index) in tracks" :key="index">
+      <div class="allist" v-for="(songs, index) in tracks" :key="index" :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'">
         <div class="index">{{ index + 1 }}</div>
         <van-cell
           :label="`${songs.ar[0].name}-${songs.name}`"

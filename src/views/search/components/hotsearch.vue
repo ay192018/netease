@@ -8,7 +8,7 @@
         :key="index"
         @click="gosearch(item.searchWord)"
       >
-        <div class="number" :class="{ active: index < 3 }">{{ index + 1 }}</div>
+        <div class="number" :class="{ active: index < 3 }"  >{{ index + 1 }}</div>
         <div class="name" :class="{ hot: index < 3 }">
           {{ item.searchWord }}
         </div>

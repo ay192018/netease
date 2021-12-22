@@ -15,7 +15,7 @@
       />
     </div>
 
-    <div class="songs" v-show="!songs" @click="songs = !songs" ref="box">
+    <div class="songs " v-show="!songs" @click="songs = !songs" ref="box"  >
       <p
         v-for="(item, index) in gc"
         :key="index"

@@ -1,6 +1,6 @@
 <template>
   <div class="results">
-    <div class="allist" v-for="(songs, index) in searchlist" :key="index">
+    <div class="allist" v-for="(songs, index) in searchlist" :key="index"    :class="index%2===0?'animate__animated animate__wobble':'animate__animated animate__jello'">
       <div class="index">{{ index + 1 }}</div>
       <van-cell
         :label="`${songs.ar[0].name}-${songs.name}`"

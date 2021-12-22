@@ -2,7 +2,7 @@
   <div class="Recommendedlist auto">
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(item, index) in songs" :key="index">
+        <div class="swiper-slide " :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'"  v-for="(item, index) in songs" :key="index" >
           <router-link
             :to="{
               name: 'songsinfo',

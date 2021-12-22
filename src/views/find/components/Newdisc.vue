@@ -13,7 +13,7 @@
     </van-cell>
 
     <div class="all">
-      <div class="swiper-slide" v-for="(item, index) in playlist" :key="index">
+      <div class="swiper-slide" v-for="(item, index) in playlist" :key="index" :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'">
         <router-link
           :to="{
             name: 'songsinfo',

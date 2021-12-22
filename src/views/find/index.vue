@@ -1,6 +1,6 @@
 <template>
   <div class="find">
-    <van-nav-bar class="app-nav-bar">
+    <van-nav-bar class="app-nav-bar ">
       <van-button
         class="searchbtn"
         slot="title"

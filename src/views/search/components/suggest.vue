@@ -1,6 +1,7 @@
 <template>
   <div class="suggest">
     <van-cell
+     :class="index%2===0?'animate__animated animate__wobble':'animate__animated animate__jello'"
       v-for="(item, index) in suggest"
       :key="index"
       @click="gosearch(item.name)"

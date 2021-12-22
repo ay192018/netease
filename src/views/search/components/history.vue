@@ -8,6 +8,7 @@
             class="swiper-slide"
             v-for="(item, index) in searchhistory"
             :key="index"
+            :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'"
             @click="gosearch(item)"
           >
             {{ item }}

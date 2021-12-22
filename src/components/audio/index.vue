@@ -1,5 +1,5 @@
 <template>
-  <div class="audio">
+  <div class="audio animate__rollIn animate__animated">
     <div class="left" @click="show = true">
       <div ref="img">
         <van-image
@@ -55,6 +55,7 @@
              ${playlist[currentPlay].ar[0].name}`"
           :border="false"
           ref="bg"
+          class="animate__animated animate__jello"
         >
           <van-icon
             name="arrow-down"

@@ -1,5 +1,5 @@
 <template>
-  <div class="Swipe">
+  <div class="Swipe animate__jello animate__animated">
     <van-swipe :autoplay="2000" :duration="300" indicator-color="#fff">
       <van-swipe-item v-for="(image, index) in images" :key="index">
         <img :src="image.pic" />

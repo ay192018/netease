@@ -7,6 +7,7 @@
           class="everycomments"
           v-for="(item, index) in tuijiancooments"
           :key="index"
+          :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'"
         >
           <div class="info">
             <div class="left">
@@ -57,6 +58,7 @@
           class="everycomments"
           v-for="(item, index) in comment"
           :key="index"
+           :class="index%2===0?'animate__animated animate__rubberBand':'animate__animated animate__swing'"
         >
           <div class="info">
             <div class="left">
@@ -97,9 +99,9 @@
           <div class="content">
             {{ item.content }}
           </div>
-          <div class="replay" v-if="item.showFloorComment !== null">
+          <!-- <div class="replay" v-if="item.showFloorComment !== null">
             {{ item.showFloorComment.replyCount }}条回复>
-          </div>
+          </div> -->
         </div>
       </van-tab>
 
@@ -108,6 +110,7 @@
           class="everycomments"
           v-for="(item, index) in hotComments"
           :key="index"
+           :class="index%2===0?'animate__animated animate__flip':'animate__animated animate__flipInY'"
         >
           <div class="info">
             <div class="left">
@@ -148,9 +151,9 @@
           <div class="content">
             {{ item.content }}
           </div>
-          <div class="replay" v-if="item.showFloorComment !== null">
+          <!-- <div class="replay" v-if="item.showFloorComment !== null">
             {{ item.showFloorComment }}条回复>
-          </div>
+          </div> -->
         </div>
       </van-tab>
     </van-tabs>
@@ -216,11 +219,13 @@ export default {
           this.intvalID,
           this.message
         );
+      this.active=1
         console.log(data);
         this.$emit("unshift", data);
         this.ispostshoow = false;
         this.message = "";
         this.$toast.success("评论成功");
+      
       } catch (error) {
         console.log(error);
         this.$toast.fail("评论失败,请登录");
