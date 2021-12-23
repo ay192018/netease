@@ -21,16 +21,18 @@
             height="70"
             radius="15"
             :src="item.coverImgUrl"
+            :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'"
           />
         </div>
         <div class="right">
-          <div v-for="(itemsongs, index) in item.tracks" :key="index">
+          <div v-for="(itemsongs, index) in item.tracks" :key="index" :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'">
             {{ index + 1 }},{{ itemsongs.first }}
           </div>
           <div v-if="item.tracks.length === 0">暂无TOP3排行歌曲</div>
         </div>
         <div class="everyday">{{ item.updateFrequency }}</div>
         <van-button
+        :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'"
           round
           text="点击查看排行榜"
           type="info"

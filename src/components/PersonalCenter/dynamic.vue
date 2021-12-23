@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import {getdongtai} from '@/api/fens.js'
 export default {
   name: "dynamic",
   data() {
@@ -39,7 +40,25 @@ export default {
       type: Object,
       required: true,
     },
+    id:{
+      type:[String, Number],
+      required: true,
+    }
   },
+  methods: {
+   async getdongtai(){
+      const {data} =await getdongtai({
+          uid :this.id,
+          limit: 99999,
+          lasttime : null,
+      })
+      console.log(data);
+    }
+  },
+  created(){
+    // console.log(this.id);
+    this.getdongtai()
+  }
 };
 </script>
 

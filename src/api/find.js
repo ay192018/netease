@@ -70,3 +70,17 @@ export const getRanking = () => {
     url: "/toplist/detail",
   });
 };
+export const getallsongs = (params) => {
+  return http({
+    method: "GET",
+    url: "/song/detail",
+    params
+  });
+};
+export const gethome = (params) => {
+  return http({
+    method: "GET",
+    url: "/homepage/block/page",
+    params
+  });
+};

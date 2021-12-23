@@ -55,7 +55,7 @@
              ${playlist[currentPlay].ar[0].name}`"
           :border="false"
           ref="bg"
-          class="animate__animated animate__jello"
+          class="animate__animated animate__rollIn"
         >
           <van-icon
             name="arrow-down"

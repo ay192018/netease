@@ -13,3 +13,10 @@ export const getguanzhu = (params) => {
     params,
   });
 };
+export const getdongtai = (params) => {
+  return http({
+    method: "GET",
+    url: '/user/event',
+    params,
+  });
+};

@@ -12,6 +12,7 @@
         v-for="(item, index) in channels"
         :title="item.name"
         :key="index"
+      
       >
         <Content :item="item"></Content>
       </van-tab>

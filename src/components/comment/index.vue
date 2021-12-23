@@ -246,6 +246,7 @@ export default {
       item.liked = !item.liked;
       item.liked == false ? item.likedCount-- : item.likedCount++;
       this.$toast.success(`${item.liked == false ? "取消点赞" : "点赞"}成功`);
+      //点赞功能只能间隔2分钟后调用，不然会失效
     },
   },
   computed: {

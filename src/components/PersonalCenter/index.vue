@@ -58,7 +58,7 @@
         >关注</van-button
       >
     </div>
-    <dynamic :data="data"></dynamic>
+    <dynamic :data="data" :id="id"></dynamic>
     <Taste :data="data"></Taste>
   </div>
 </template>
