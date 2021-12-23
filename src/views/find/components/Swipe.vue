@@ -1,5 +1,5 @@
 <template>
-  <div class="Swipe animate__jello animate__animated">
+  <div class="Swipe animate__flipInX animate__animated">
     <van-swipe :autoplay="2000" :duration="300" indicator-color="#fff">
       <van-swipe-item v-for="(image, index) in images" :key="index">
         <img :src="image.pic" />
@@ -10,7 +10,6 @@
 
 <script>
 import { getbanner } from "@/api/find.js";
-
 export default {
   name: "Swipe",
   data() {
@@ -18,7 +17,14 @@ export default {
       images: [],
     };
   },
+  props: {
+    home: {
+      type: Object,
+      required: true,
+    },
+  },
   created() {
+    //  console.log(this.home.data.blocks[0].extInfo.banners);
     this.getbanner();
   },
   methods: {

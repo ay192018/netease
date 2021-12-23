@@ -1,5 +1,7 @@
 <template>
-  <div class="Yuncun">Yuncun</div>
+  <div class="Yuncun animate__fadeInTopLeft animate__animated">
+    Yuncun
+  </div>
 </template>
 
 <script>
@@ -8,4 +10,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+		</style>

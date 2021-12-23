@@ -1,6 +1,6 @@
 import axios from "axios";
 const http = axios.create({
-  baseURL: "http://139.224.25.205:3000",
+  baseURL: "/api",
   timeout: 5000,
   params: {
     cookie: localStorage.getItem("cookie"),

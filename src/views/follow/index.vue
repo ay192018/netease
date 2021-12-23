@@ -1,5 +1,5 @@
 <template>
-  <div class="follow">follow</div>
+  <div class="follow  animate__heartBeat animate__animated">follow</div>
 </template>
 
 <script>

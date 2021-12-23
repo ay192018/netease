@@ -5,6 +5,7 @@
       title="歌单广场"
       left-arrow
       @click-left="$router.back()"
+      :border="false"
     >
     </van-nav-bar>
     <van-tabs v-model="active" animated>
@@ -12,7 +13,6 @@
         v-for="(item, index) in channels"
         :title="item.name"
         :key="index"
-      
       >
         <Content :item="item"></Content>
       </van-tab>

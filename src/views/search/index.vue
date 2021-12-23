@@ -1,5 +1,5 @@
 <template>
-  <div class="search">
+  <div class="search  animate__heartBeat animate__animated">
     <form action="/">
       <van-search
         v-model="value"

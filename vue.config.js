@@ -1,26 +1,26 @@
-// module.exports = {
-//   //   configureWebpack: {
-//   //     resolve: {
-//   //       alias: {
-//   //         assets: "@/assets",
-//   //         common: "@/common",
-//   //         components: "@/components",
-//   //         network: "@/network",
-//   //         views: "@/views",
-//   //         plugins: "@/plugins",
-//   //       },
-//   //     },
-//   //   },
-//   devServer: {
-//     Proxy: {
-//       "/api": {
-//         target: "http://139.224.25.205:3000",
-//         changeOrigin: true,
-//         ws: true,
-//         pathRewrite: {
-//           "^/api": "",
-//         },
-//       },
-//     },
-//   },
-// };
+module.exports = {
+  configureWebpack: {
+    resolve: {
+      alias: {
+        assets: "@/assets",
+        common: "@/common",
+        components: "@/components",
+        network: "@/network",
+        views: "@/views",
+        plugins: "@/plugins",
+      },
+    },
+  },
+  devServer: {
+    proxy: {
+      "/api": {
+        target: "http://www.codeman.ink:3000", //代理URL
+        changeOrigin: true, //是否跨域
+        ws: true, //开实时通信
+        pathRewrite: {
+          "^/api": "",
+        },
+      },
+    },
+  },
+};

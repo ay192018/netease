@@ -24,21 +24,27 @@
       />
       <div class="lijilogin">{{}}</div>
       <div class="xinxi">
-       <router-link :to="{
-            name:'userprofile',
+        <router-link
+          :to="{
+            name: 'userprofile',
             params: {
-              id:this.id,
-            }
-       }">
-        <span >{{ data.profile.followeds }}关注</span>
-       </router-link>
-        <router-link :to="{
-            name:'userprofile',
+              id: this.id,
+            },
+          }"
+          class="to"
+        >
+          <span>{{ data.profile.followeds | handleNum }}关注</span>
+        </router-link>
+        <router-link
+          :to="{
+            name: 'userprofile',
             params: {
-              id:this.id,
-            }
-       }">
-        <span>{{ data.profile.follows }}粉丝</span>
+              id: this.id,
+            },
+          }"
+          class="to"
+        >
+          <span>{{ data.profile.follows | handleNum }}粉丝</span>
         </router-link>
         <span>Lv.{{ data.level }}</span>
       </div>
@@ -120,6 +126,19 @@ export default {
   computed: {
     ...mapState(["token"]),
   },
+  filters: {
+    handleNum(num) {
+      if (num > 100000000) {
+        num = (num / 100000000).toFixed(2);
+        return num + "亿";
+      } else if (num > 10000) {
+        num = (num / 1000).toFixed(2);
+        return num + "万";
+      } else {
+        return num;
+      }
+    },
+  },
 };
 </script>
 
@@ -188,6 +207,9 @@ export default {
   }
   /deep/ .van-nav-bar__title {
     font-size: 15px;
+  }
+  .to {
+    color: #000;
   }
 }
 </style>

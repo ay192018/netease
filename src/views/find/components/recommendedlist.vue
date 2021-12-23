@@ -1,8 +1,17 @@
 <template>
-  <div class="Recommendedlist auto">
+  <div class="Recommendedlist auto animate__fadeInRightBig animate__animated">
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">
-        <div class="swiper-slide " :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'"  v-for="(item, index) in songs" :key="index" >
+        <div
+          class="swiper-slide"
+          :class="
+            index % 2 === 0
+              ? 'animate__animated animate__bounceInDown'
+              : 'animate__animated animate__bounceInRight'
+          "
+          v-for="(item, index) in songs"
+          :key="index"
+        >
           <router-link
             :to="{
               name: 'songsinfo',
@@ -88,5 +97,4 @@ export default {
   top: 5px;
   color: antiquewhite;
 }
-
 </style>

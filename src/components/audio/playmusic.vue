@@ -15,7 +15,7 @@
       />
     </div>
 
-    <div class="songs " v-show="!songs" @click="songs = !songs" ref="box"  >
+    <div class="songs" v-show="!songs" @click="songs = !songs" ref="box">
       <p
         v-for="(item, index) in gc"
         :key="index"
@@ -359,6 +359,7 @@ export default {
     transform: translate(-50%, -50%);
     text-align: center;
 
+    scroll-behavior: smooth;
     .Lyric {
       color: #ccc;
       font-size: 16px;

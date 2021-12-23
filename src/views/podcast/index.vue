@@ -1,5 +1,5 @@
 <template>
-  <div class="podcast">
+  <div class="podcast  animate__fadeInTopLeft animate__animated">
  
 
 

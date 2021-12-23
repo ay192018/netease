@@ -14,6 +14,7 @@ import "./utils/dayjs";
 import "swiper/css/swiper.css";
 import { ImagePreview } from "vant";
 import 'animate.css';
+import '@/utils/anime.min.js'
 // 全局注册
 Vue.use(ImagePreview);
 Vue.use(VueAwesomeSwiper /* { default options with global component } */);

@@ -49,6 +49,9 @@ export default {
       rgb(208, 251, 249)
     ) !important;
   }
+  /deep/ .van-tabbar-item--active,.van-tabbar-item {
+    transition: all 0.5s;
+  }
 }
 </style>
 >

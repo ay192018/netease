@@ -21,8 +21,8 @@
         </router-link>
         <div class="lijilogin">{{ profile.nickname }}</div>
         <div class="xinxi">
-          <span>{{ profile.follows }}关注</span>
-          <span>{{ profile.followeds }}粉丝</span>
+          <span>{{  profile.followeds |handleNum}}关注</span>
+          <span>{{ profile.follows |handleNum}}粉丝</span>
           <span>Lv.{{ userxinxi.level }}</span>
         </div>
       </div>
@@ -35,12 +35,12 @@
           height="60"
           round
           fit="cover"
-          src="https://img01.yzcdn.cn/vant/cat.jpeg"
+          src="https://img0.baidu.com/it/u=3699065431,2081224573&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500"
         />
         <div class="lijilogin">立即登录</div>
       </div>
     </div>
-    <van-popup v-model="show" round position="top" :style="{ height: '50%' }">
+    <van-popup v-model="show" round position="top" :style="{ height: '50%'}">
       <Login :show="show"></Login>
     </van-popup>
   </div>
@@ -68,6 +68,19 @@ export default {
   },
   created() {
     this.getshuaxin();
+  },
+  filters: {
+    handleNum(num) {
+      if (num > 100000000) {
+        num = (num / 100000000).toFixed(2);
+        return num + "亿";
+      } else if (num > 10000) {
+        num = (num / 1000).toFixed(2);
+        return num + "万";
+      } else {
+        return num;
+      }
+    },
   },
 };
 </script>

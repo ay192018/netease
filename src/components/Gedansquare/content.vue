@@ -9,7 +9,16 @@
       error-text="请求失败，点击重新加载"
     >
       <div class="all">
-        <div class="swiper-slide" v-for="(item, index) in list" :key="index" :class="index%2===0?'animate__animated animate__bounceInDown':'animate__animated animate__bounceInUp'">
+        <div
+          class="swiper-slide"
+          v-for="(item, index) in list"
+          :key="index"
+          :class="
+            index % 2 === 0
+              ? 'animate__animated animate__bounceInDown'
+              : 'animate__animated animate__bounceInUp'
+          "
+        >
           <router-link
             :to="{
               name: 'songsinfo',
@@ -91,7 +100,7 @@ export default {
 <style scoped>
 .content {
   width: 95vw;
-  height: 80vh;
+  height: 82vh;
   overflow-y: auto;
   margin-left: 18px;
   margin-top: 12px;

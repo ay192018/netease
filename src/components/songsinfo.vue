@@ -1,7 +1,11 @@
 <template>
   <div class="songsinfo auto">
     <img class="filterimg" :src="playlist.coverImgUrl" />
-    <van-nav-bar title="歌单" class="nav" :border="false">
+    <van-nav-bar
+      :title="playlist.name"
+      class="nav animate__fadeIn animate__animated"
+      :border="false"
+    >
       <van-icon
         name="arrow-left"
         slot="left"
@@ -18,7 +22,7 @@
     <div class="songsmaterial" ref="imgurl">
       <div class="left">
         <van-image
-          class="userimgs"
+          class="userimgs animate__fadeIn animate__animated"
           width="130"
           height="130"
           radius="15"
@@ -36,9 +40,12 @@
               round
               fit="cover"
               :src="playlist.creator.avatarUrl"
+              class="animate__flipInX animate__animated"
             />
 
-            <span class="username">{{ playlist.creator.nickname }}</span>
+            <span class="username" @click="userziliao">{{
+              playlist.creator.nickname
+            }}</span>
 
             <van-button round type="info" size="mini" color="#666565">
               <van-icon name="plus" slot="icon" />
@@ -50,7 +57,7 @@
         </div>
       </div>
     </div>
-    <div class="xuanxiang">
+    <div class="xuanxiang animate__flipInX animate__animated">
       <div class="item">
         <van-icon size="20" color="#484949" name="add-o" />
         <div>{{ playlist.subscribedCount | handleNum }}</div>
@@ -76,7 +83,16 @@
       </div>
     </div>
     <div class="box">
-      <div class="allist" v-for="(songs, index) in tracks" :key="index" :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'">
+      <div
+        class="allist"
+        v-for="(songs, index) in alltracks"
+        :key="index"
+        :class="
+          index % 2 === 0
+            ? 'animate__animated animate__bounceInLeft'
+            : 'animate__animated animate__bounceInRight'
+        "
+      >
         <div class="index">{{ index + 1 }}</div>
         <van-cell
           :label="`${songs.ar[0].name}-${songs.name}`"
@@ -101,7 +117,7 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
-import { getrsonginfo, getallsonginfo } from "@/api/find.js";
+import { getrsonginfo, getallsonginfo, getallsongs } from "@/api/find.js";
 import { ImagePreview } from "vant";
 export default {
   name: "songsinfo",
@@ -114,7 +130,9 @@ export default {
   data() {
     return {
       playlist: {}, //歌单信息
-      tracks: [],
+      tracks: [], //不完整歌单
+      trackIds: [],
+      alltracks: [], //完整歌单
     };
   },
   props: {
@@ -124,23 +142,28 @@ export default {
     },
   },
   methods: {
-    getrsonginfo() {
-      getrsonginfo(this.id)
-        .then(({ data }) => {
-          this.playlist = data.playlist;
-          this.tracks = data.playlist.tracks;
-          this.$nextTick(() => {
-            this.img();
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      getallsonginfo(this.id)
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch((err) => {});
+    async getrsonginfo() {
+      const { data } = await getrsonginfo(this.id);
+      this.playlist = data.playlist;
+      this.tracks = data.playlist.tracks;
+      // console.log( this.playlist);
+
+      data.playlist.trackIds.forEach((item) => {
+        //  console.log(`${item.id},`);
+        this.trackIds.push(item.id);
+        //  return `${item.id}`
+      });
+      // this.trackIds=data.playlist.trackIds
+      // console.log(this.trackIds.join());
+      this.$nextTick(() => {
+        this.img();
+      });
+
+      const res = await getallsongs({
+        ids: this.trackIds.join(),
+      });
+      this.alltracks = res.data.songs;
+      // console.log(res.data.songs);
     },
     // getallsonginfo() {
     //   getallsonginfo(this.id)
@@ -189,6 +212,17 @@ export default {
         });
       });
     },
+    userziliao() {
+      this.$router.push({
+        name: "PersonalCenter",
+        params: {
+          id: this.playlist.userId,
+        },
+      });
+    },
+    scrolls(e) {
+      console.log(e.target.offsetTop);
+    },
   },
   created() {
     this.getrsonginfo();
@@ -220,6 +254,7 @@ export default {
   position: relative;
   width: 100%;
   background: transparent;
+  overflow-x: hidden;
   .filterimg {
     width: 100%;
     height: 250px;
@@ -235,7 +270,9 @@ export default {
     background: transparent;
   }
   /deep/ .van-nav-bar__title {
-    color: #e4e4e4;
+    max-width: none;
+    color: #000000;
+    font-size: 13px;
   }
   .songsmaterial {
     width: 350px;
@@ -356,9 +393,9 @@ export default {
   /deep/.van-cell {
     background: transparent;
   }
-  .box {
-    height: 45vh;
-    overflow-y: auto;
-  }
+  // .box {
+  //   height: 45vh;
+  //   overflow-y: auto;
+  // }
 }
 </style>

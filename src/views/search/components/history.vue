@@ -8,7 +8,11 @@
             class="swiper-slide"
             v-for="(item, index) in searchhistory"
             :key="index"
-            :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'"
+            :class="
+              index % 2 === 0
+                ? 'animate__animated animate__bounceInLeft'
+                : 'animate__animated animate__bounceInRight'
+            "
             @click="gosearch(item)"
           >
             {{ item }}
@@ -92,7 +96,7 @@ export default {
   font-size: 15px;
   text-align: justify;
   margin-right: 5px;
-  color: #fdceed;
+  color: #ccc;
   min-width: auto;
   background-image: -moz-linear-gradient(
     90deg,

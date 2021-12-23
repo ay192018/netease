@@ -1,6 +1,6 @@
 <template>
-  <div class="fun">
-    <ul class="top">
+  <div class="fun" v-if="token" >
+    <ul class="top" >
       <li>
         <img
           src="./新建文件夹/cc8caa49-ee02-4f63-9235-5205b9ed5f40.png"
@@ -52,8 +52,12 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   anme: "fun",
+  computed: {
+  ...mapState(['token'])
+  },
 };
 </script>
 

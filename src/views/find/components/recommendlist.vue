@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { getfindlist, getpersonal } from "@/api/find.js";
+import { getfindlist, getpersonal ,gethome} from "@/api/find.js";
 import { mapMutations, mapState } from "vuex";
 export default {
   name: "list",
@@ -90,22 +90,25 @@ export default {
       this.findlist = data.data;
     },
     async personal() {
+        // console.log(this.isPlaying);
       const { data } = await getpersonal();
       this.$nextTick(() => {
         if (this.ref.paused) {
           this.ref.play();
           this.ref.autoplay = true;
-          if (this.isPlaying == false) {
-            this.$store.commit("switchPlayPause");
+          if (this.isPlaying == false) {          
+            this.$store.commit("switchPlayPause");                     
           }
         }
       });
       this.$store.commit("setplaylist", data.data);
       this.$store.commit("setintvalID", this.$store.state.playlist[0].id);
     },
+   
   },
   mounted() {
     this.getfindlist();
+    
   },
   computed: {
     ...mapState(["currentPlay", "intvalID", "isPlaying", "ref", "playlist"]),

@@ -1,5 +1,5 @@
 <template>
-  <div class="my">
+  <div class="my ">
     <Userinfo></Userinfo>
     <Fun></Fun>
     <Likemusic :userplaylist="userplaylist"></Likemusic>

@@ -2,12 +2,16 @@
   <div class="comment">
     <div class="comments">评论区</div>
     <van-tabs v-model="active" animated>
-      <van-tab title="推荐">
+      <van-tab title="推荐" v-if="tuijiancooments.length !== 0">
         <div
           class="everycomments"
           v-for="(item, index) in tuijiancooments"
           :key="index"
-          :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'"
+          :class="
+            index % 2 === 0
+              ? 'animate__animated animate__bounceInLeft'
+              : 'animate__animated animate__bounceInRight'
+          "
         >
           <div class="info">
             <div class="left">
@@ -35,7 +39,7 @@
             </div>
 
             <div class="likecount">
-              {{ item.likedCount
+              {{ item.likedCount | handleNum
               }}<van-icon
                 :name="item.liked ? 'good-job' : 'good-job-o'"
                 slot
@@ -53,12 +57,16 @@
           </div>
         </div>
       </van-tab>
-      <van-tab title="最新">
+      <van-tab title="最新" v-if="comment.length !== 0">
         <div
           class="everycomments"
           v-for="(item, index) in comment"
           :key="index"
-           :class="index%2===0?'animate__animated animate__rubberBand':'animate__animated animate__swing'"
+          :class="
+            index % 2 === 0
+              ? 'animate__animated animate__rubberBand'
+              : 'animate__animated animate__swing'
+          "
         >
           <div class="info">
             <div class="left">
@@ -105,12 +113,16 @@
         </div>
       </van-tab>
 
-      <van-tab title="最热">
+      <van-tab title="最热 " v-if="hotComments.length !== 0">
         <div
           class="everycomments"
           v-for="(item, index) in hotComments"
           :key="index"
-           :class="index%2===0?'animate__animated animate__flip':'animate__animated animate__flipInY'"
+          :class="
+            index % 2 === 0
+              ? 'animate__animated animate__flip'
+              : 'animate__animated animate__flipInY'
+          "
         >
           <div class="info">
             <div class="left">
@@ -219,13 +231,12 @@ export default {
           this.intvalID,
           this.message
         );
-      this.active=1
+        this.active = 1;
         console.log(data);
         this.$emit("unshift", data);
         this.ispostshoow = false;
         this.message = "";
         this.$toast.success("评论成功");
-      
       } catch (error) {
         console.log(error);
         this.$toast.fail("评论失败,请登录");

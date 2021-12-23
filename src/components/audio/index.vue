@@ -1,5 +1,5 @@
 <template>
-  <div class="audio animate__bounce animate__animated">
+  <div class="audio animate__lightSpeedInLeft animate__animated">
     <div class="left" @click="show = true">
       <div ref="img">
         <van-image

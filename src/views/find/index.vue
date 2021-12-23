@@ -1,5 +1,5 @@
 <template>
-  <div class="find">
+  <div class="find  ">
     <van-nav-bar class="app-nav-bar animate__flipInX animate__animated">
       <van-button
         class="searchbtn"
@@ -27,7 +27,7 @@
       ></van-icon>
     </van-nav-bar>
     <div class="components">
-      <Swipe />
+      <Swipe :home="home" />
       <List />
       <Songtitle />
       <Recommendedlist />
@@ -51,6 +51,7 @@ import Recommendedlist from "./components/recommendedlist.vue";
 import List from "./components/recommendlist.vue";
 import Newdisc from "./components/Newdisc.vue";
 import Layout from "@/views/my/components/layout.vue";
+import { gethome} from "@/api/find.js";
 export default {
   name: "find",
   components: {
@@ -64,13 +65,25 @@ export default {
   data() {
     return {
       show: false,
+      home:{}
     };
   },
   methods: {
     showPopup() {
       this.show = true;
     },
+     async gethome(){
+      const { data } = await gethome({
+        refresh:true
+      });
+      this.home=data
+      // console.log(data.data);
+    }
   },
+  created(){
+    
+       this.gethome();
+  }
 };
 </script>
 
