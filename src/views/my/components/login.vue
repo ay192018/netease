@@ -32,8 +32,8 @@ export default {
   data() {
     return {
       iskowmshow: false,
-      phone: "",
-      password: "",
+      phone: "15949665034",
+      password: "wjy0.0.0",
     };
   },
   methods: {

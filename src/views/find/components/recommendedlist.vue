@@ -70,6 +70,7 @@ export default {
 
 <style lang="less" scoped>
 .Recommendedlist {
+  margin-top: 15px;
   height: 120px;
   overflow-x: auto;
   overflow-y: hidden;

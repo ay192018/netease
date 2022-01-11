@@ -39,12 +39,12 @@
               height="25"
               round
               fit="cover"
-              :src="playlist.creator.avatarUrl"
+              :src="creator.avatarUrl"
               class="animate__flipInX animate__animated"
             />
 
             <span class="username" @click="userziliao">{{
-              playlist.creator.nickname
+              creator.nickname
             }}</span>
 
             <van-button round type="info" size="mini" color="#666565">
@@ -92,24 +92,27 @@
             ? 'animate__animated animate__bounceInLeft'
             : 'animate__animated animate__bounceInRight'
         "
+        @click="getaudio(songs, index)"
       >
-        <div class="index">{{ index + 1 }}</div>
-        <van-cell
-          :label="`${songs.ar[0].name}-${songs.name}`"
-          clickable
-          @click="getaudio(songs, index)"
-          class="list"
-        >
-          <template #title>
-            <span class="songname">{{ songs.name }}</span>
-            <span class="songname" v-if="songs.alia.length === 1"
-              >({{ songs.alia[0] }})</span
-            >
-          </template>
-          <template #right-icon>
-            <van-icon name="ellipsis" size="18" />
-          </template>
-        </van-cell>
+        <div class="items">
+          <div class="item">
+            <div class="leftimg">
+              <van-image
+                width="40"
+                height="40"
+                radius="8"
+                :src="songs.al.picUrl"
+              />
+            </div>
+            <div class="title">
+              <div class="songsname">{{ songs.name }}</div>
+              <div class="songstitle">
+                {{ `${songs.ar[0].name}-${songs.name}` }}
+              </div>
+            </div>
+          </div>
+          <div class="icon"><van-icon name="ellipsis" size="20" /></div>
+        </div>
       </div>
     </div>
   </div>
@@ -133,6 +136,7 @@ export default {
       tracks: [], //不完整歌单
       trackIds: [],
       alltracks: [], //完整歌单
+      creator: {},
     };
   },
   props: {
@@ -145,6 +149,7 @@ export default {
     async getrsonginfo() {
       const { data } = await getrsonginfo(this.id);
       this.playlist = data.playlist;
+      this.creator = data.playlist.creator;
       this.tracks = data.playlist.tracks;
       // console.log( this.playlist);
 
@@ -397,5 +402,31 @@ export default {
   //   height: 45vh;
   //   overflow-y: auto;
   // }
+  .items {
+    display: flex;
+    align-items: center;
+    .item {
+      display: flex;
+      align-items: center;
+      .title {
+        width: 70vw;
+        margin-left: 10px;
+        height: 50px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        .songsname {
+          color: #5b5b5b;
+          font-size: 14px;
+          font-weight: bold;
+         
+        }
+        .songstitle {
+          color: #c4c4c4;
+          font-size: 10px;
+        }
+      }
+    }
+  }
 }
 </style>

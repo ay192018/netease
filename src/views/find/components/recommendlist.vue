@@ -14,7 +14,10 @@
           </router-link>
           <span>每日推荐</span>
         </div>
-        <div class="swiper-slide animate__shakeX animate__animated" @click="personal">
+        <div
+          class="swiper-slide animate__shakeX animate__animated"
+          @click="personal"
+        >
           <div class="icons">
             <img src="./网易云图标/Snipaste_2021-11-28_21-30-52.png" alt="" />
           </div>
@@ -74,7 +77,7 @@
 </template>
 
 <script>
-import { getfindlist, getpersonal ,gethome} from "@/api/find.js";
+import { getfindlist, getpersonal, gethome } from "@/api/find.js";
 import { mapMutations, mapState } from "vuex";
 export default {
   name: "list",
@@ -90,25 +93,25 @@ export default {
       this.findlist = data.data;
     },
     async personal() {
-        // console.log(this.isPlaying);
+      // console.log(this.isPlaying);
       const { data } = await getpersonal();
+      console.log(data);
       this.$nextTick(() => {
         if (this.ref.paused) {
           this.ref.play();
           this.ref.autoplay = true;
-          if (this.isPlaying == false) {          
-            this.$store.commit("switchPlayPause");                     
+          if (this.isPlaying == false) {
+            this.$store.commit("switchPlayPause");
           }
         }
       });
       this.$store.commit("setplaylist", data.data);
+
       this.$store.commit("setintvalID", this.$store.state.playlist[0].id);
     },
-   
   },
   mounted() {
     this.getfindlist();
-    
   },
   computed: {
     ...mapState(["currentPlay", "intvalID", "isPlaying", "ref", "playlist"]),
@@ -118,6 +121,7 @@ export default {
 
 <style scoped>
 .list {
+  margin-top: 15px;
   border-bottom-color: #f6f6f6 1px solid;
   overflow-x: auto;
   background: transparent;

@@ -13,7 +13,16 @@
     </van-cell>
 
     <div class="all">
-      <div class="swiper-slide" v-for="(item, index) in playlist" :key="index" :class="index%2===0?'animate__animated animate__bounceInLeft':'animate__animated animate__bounceInRight'">
+      <div
+        class="swiper-slide"
+        v-for="(item, index) in playlist"
+        :key="index"
+        :class="
+          index % 2 === 0
+            ? 'animate__animated animate__bounceInLeft'
+            : 'animate__animated animate__bounceInRight'
+        "
+      >
         <router-link
           :to="{
             name: 'songsinfo',
@@ -47,8 +56,9 @@ export default {
     async getallxindie() {
       const cookie = localStorage.getItem("cookie");
       const { data } = await getallxindie(cookie, 1000000);
-      console.log(data);
+
       this.albums = data.albums;
+      // console.log(data.albums);
     },
     async getjingxuanxindie() {
       const cookie = localStorage.getItem("cookie");

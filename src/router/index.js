@@ -74,6 +74,12 @@ const routes = [
     component: () => import("@/components/userprofile/"),
     props: true,
   },
+  {
+    path: "/historyplay",
+    name: "historyplay",
+    component: () => import("@/views/my/components/historyplay.vue"),
+    
+  },
 ];
 
 const router = new VueRouter({

@@ -1,8 +1,9 @@
 <template>
-  <div class="my ">
+  <div class="my">
     <Userinfo></Userinfo>
     <Fun></Fun>
     <Likemusic :userplaylist="userplaylist"></Likemusic>
+
     <!-- <Gedan :userplaylist="userplaylist"></Gedan> -->
 
     <!-- <Collection :userplaylist="userplaylist"></Collection> -->
@@ -13,6 +14,7 @@
 import Fun from "./components/fun.vue";
 import Userinfo from "./components/userinfo.vue";
 import Likemusic from "./components/likemusic.vue";
+
 // import Gedan from "./components/gedan.vue";
 // import Collection from "./components/Collection.vue";
 import { getusergedas, getmeirituijiangequ } from "@/api/login.js";

@@ -1,8 +1,8 @@
 <template>
-  <div class="search  animate__heartBeat animate__animated">
+  <div class="search animate__bounceInDown animate__animated">
     <form action="/">
       <van-search
-        v-model="value"
+        v-model.trim="value"
         show-action
         :placeholder="defaultsearch"
         @search="onSearch"

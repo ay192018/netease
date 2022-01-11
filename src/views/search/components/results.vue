@@ -1,23 +1,36 @@
 <template>
   <div class="results">
-    <div class="allist" v-for="(songs, index) in searchlist" :key="index"    :class="index%2===0?'animate__animated animate__wobble':'animate__animated animate__jello'">
-      <div class="index">{{ index + 1 }}</div>
-      <van-cell
-        :label="`${songs.ar[0].name}-${songs.name}`"
-        @click="getaudio(index)"
-        clickable
-      >
-        <template #title>
-          <span class="songname van-ellipsis">{{ songs.name }}</span>
-          <span class="songname" v-if="songs.alia.length === 1"
-            >({{ songs.alia[0] }})</span
-          >
-        </template>
-        <template #right-icon>
-          <van-icon name="ellipsis" size="18" />
-        </template>
-      </van-cell>
-    </div>
+    <van-cell
+      clickable
+      v-for="(item, index) in searchlist"
+      :key="index"
+      :class="
+        index % 2 === 0
+          ? 'animate__animated animate__bounceInLeft'
+          : 'animate__animated animate__bounceInRight'
+      "
+      @click="getaudio(index)"
+    >
+      <div class="items">
+        <div class="item">
+          <div class="leftimg">
+            <van-image
+              width="40"
+              height="40"
+              radius="8"
+              :src="item.al.picUrl"
+            />
+          </div>
+          <div class="title">
+            <div class="songsname">{{ item.name }}</div>
+            <div class="songstitle">
+              {{ `${item.ar[0].name}-${item.name}` }}
+            </div>
+          </div>
+        </div>
+        <div class="icon"><van-icon name="ellipsis" size="20" /></div>
+      </div>
+    </van-cell>
   </div>
 </template>
 
@@ -76,6 +89,31 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow-x: hidden !important;
+    }
+  }
+  .items {
+    display: flex;
+    align-items: center;
+    .item {
+      display: flex;
+      align-items: center;
+      .title {
+        width: 70vw;
+        margin-left: 10px;
+        height: 50px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        .songsname {
+          color: #5b5b5b;
+          font-size: 14px;
+          font-weight: bold;
+        }
+        .songstitle {
+          color: #c4c4c4;
+          font-size: 10px;
+        }
+      }
     }
   }
 }

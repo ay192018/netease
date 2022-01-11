@@ -48,7 +48,7 @@
         v-model="show"
         position="bottom"
         :style="{ height: '100%', width: '100%' }"
-        get-container="body"
+        get-container="#app"
       >
         <van-nav-bar
           :title="`${playlist[currentPlay].name}--   
@@ -146,9 +146,7 @@ export default {
     //     this.$store.commit("setcurrent", this.$refs.getaudio.currentTime);
     //   }, 1000);
     // },
-    getContainer() {
-      return document.querySelector(".getContainer");
-    },
+
     closes() {
       this.show = false;
     },

@@ -1,7 +1,7 @@
 <template>
-  <div class="fun" v-if="token" >
-    <ul class="top" >
-      <li>
+  <div class="fun" v-if="token">
+    <ul class="top">
+      <li @click="showPopup">
         <img
           src="./新建文件夹/cc8caa49-ee02-4f63-9235-5205b9ed5f40.png"
           alt=""
@@ -52,11 +52,23 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import Historyplay from "./historyplay.vue";
+import { mapState } from "vuex";
 export default {
   anme: "fun",
+  data() {
+    return {};
+  },
+  components: {
+    Historyplay,
+  },
   computed: {
-  ...mapState(['token'])
+    ...mapState(["token"]),
+  },
+  methods: {
+    showPopup() {
+      this.$router.push("/historyplay");
+    },
   },
 };
 </script>
@@ -68,7 +80,7 @@ export default {
   height: 120px;
   border-radius: 15px;
   margin-top: 15px;
- background: transparent;
+  background: transparent;
 
   ul {
     display: flex;
@@ -81,6 +93,10 @@ export default {
         display: block;
       }
     }
+  }
+  /deep/ .van-nav-bar__content,
+  .van-nav-bar {
+    background: linear-gradient(79deg, rgb(205, 254, 239), rgb(251, 208, 219));
   }
 }
 </style>

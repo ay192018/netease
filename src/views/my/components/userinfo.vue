@@ -1,5 +1,6 @@
 <template>
   <div class="userinfo">
+    
     <div class="ziliaol" v-if="token">
       <div style="text-align: center">
         <router-link

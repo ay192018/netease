@@ -93,7 +93,7 @@ export default {
     async getuserinfo() {
       const { data } = await getuserinfo(this.id);
       this.data = data;
-      console.log(data);
+      console.log(this.data.profile);
       this.$nextTick(() => {
         this.img();
       });

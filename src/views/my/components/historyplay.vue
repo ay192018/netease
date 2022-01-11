@@ -1,10 +1,24 @@
 <template>
-  <div class="songs">
+  <div class="historyplay">
+    <van-nav-bar
+      title="最近播放"
+      :border="false"
+      ref="bg"
+      class="animate__animated animate__rollIn"
+    >
+      <van-icon
+        name="arrow-down"
+        @click="$router.back()"
+        slot="left"
+        size="23"
+        color="#e4e4e4"
+      />
+    </van-nav-bar>
     <div class="audiolist">
       <div class="allplay">
         <van-icon name="play-circle" size="18" color="#ea4d44" />
         <span class="allplaytitle">播放全部</span>
-        <span class="playcount">({{ list.length }}首)</span>
+        <span class="playcount">({{ songs.length }}首)</span>
       </div>
       <div class="iconlist">
         <van-icon name="success" color="#6c6c6c" size="18" class="gou" />
@@ -13,13 +27,9 @@
     <div class="list">
       <van-cell
         clickable
-        v-for="(item, index) in list"
-        :class="
-          index % 2 === 0
-            ? 'animate__animated animate__jello'
-            : 'animate__animated animate__swing'
-        "
+        v-for="(item, index) in songs"
         :key="index"
+        class="animate__animated animate__rollIn"
         @click="play(index)"
       >
         <div class="items">
@@ -47,19 +57,31 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { Historyplay } from "@/api/login.js";
+import { mapState } from "vuex";
 export default {
-  name: "songs",
-  props: {
-    list: {
-      type: Array,
-      required: true,
-    },
+  name: "historyplay",
+  data() {
+    return {
+      songs: [],
+    };
   },
   methods: {
+    async Historyplay() {
+      const { data } = await Historyplay({
+        uid: this.profile.userId,
+        type: 1,
+      });
+      // console.log(data.weekData);
+      data.weekData.forEach((item) => {
+        this.songs.push(item.song);
+      });
+      console.log(this.songs);
+    },
     play(index) {
       // console.log(index);
-      this.$store.commit("setplaylist", this.list);
+
+      this.$store.commit("setplaylist", this.songs);
       this.$nextTick(() => {
         if (this.ref.paused) {
           this.ref.autoplay = true;
@@ -71,30 +93,33 @@ export default {
       });
 
       this.$store.commit("setcurrentPlay", index);
+
       this.$store.commit(
         "setintvalID",
         this.$store.state.playlist[this.currentPlay].id
       );
+      console.log(this.intvalID);
     },
   },
   computed: {
-    ...mapState(["currentPlay", "intvalID", "isPlaying", "ref"]),
+    ...mapState(["profile", "currentPlay", "intvalID", "isPlaying", "ref"]),
+  },
+  mounted() {
+    this.Historyplay();
   },
 };
 </script>
 
 <style lang="less" scoped>
-.songs {
-  width: 95vw;
-  height: 200px;
-
-  margin: auto;
+.historyplay {
+  background-color: transparent;
   .audiolist {
     width: 350px;
     margin: 20px auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .allplay {
       display: flex;
       .allplaytitle {
@@ -114,7 +139,7 @@ export default {
     }
   }
   .list {
-    height: 47vh;
+    height: 80vh;
     overflow-y: auto;
     .items {
       display: flex;
@@ -141,6 +166,12 @@ export default {
         }
       }
     }
+  }
+  /deep/ .van-cell {
+    background-color: transparent;
+  }
+  /deep/ .van-nav-bar {
+    background-color: transparent;
   }
 }
 </style>

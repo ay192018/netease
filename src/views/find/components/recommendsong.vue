@@ -21,6 +21,7 @@ export default {};
 
 <style lang="less" scoped>
 .song {
+  margin-top: 15px;
   background: transparent;
   /deep/ .van-cell {
     background: transparent;

@@ -30,8 +30,8 @@ Vue.use(Vuex);
 //   },
 // };
 let defaultMusic = {
-  name: "哪里都是你2.0",
-  id: 1363642136,
+  name: "楼顶上的小斑鸠",
+  id: 1844449888,
   ar: [
     {
       name: "队长",
@@ -39,7 +39,7 @@ let defaultMusic = {
   ],
   al: {
     picUrl:
-      "http://p4.music.126.net/dcPHOdEv_27Xk56CDBox4w==/109951164055238135.jpg",
+      "http://p4.music.126.net/6hLTikf30kzZExMuDDj0SQ==/109951165972937664.jpg",
   },
 };
 export default new Vuex.Store({
@@ -50,7 +50,7 @@ export default new Vuex.Store({
     intvalID: defaultMusic.id, //当前音乐id
     Lyric: {}, //歌词
     current: 0, //当前音乐的时间
-    ref: null,
+    ref: null, //播放器audiodom元素
     searchlist: {}, //搜索结果歌单
     searchhistory: [], //搜索历史
     cookie: "", //cookie
@@ -119,12 +119,6 @@ export default new Vuex.Store({
     //   state.userid = data;
     // },
   },
-  actions: {
-    // async requestLyric(content, options) {
-    //   // console.log(content, options);
-    //   let { data } = await getrsongeci(options);
-    //   content.commit("setLyric", data.lrc.lyric);
-    // },
-  },
+  actions: {},
   modules: {},
 });

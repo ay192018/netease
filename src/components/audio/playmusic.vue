@@ -164,12 +164,10 @@ export default {
       this.$attrs.pause();
     },
     rotate() {
-      if (this.isPlaying == true) {
-        clearInterval(timer);
-      }
       let rotateVal = 0;
+      let timer = null;
       let img = this.$refs.img;
-      let timer = setInterval(() => {
+      timer = setInterval(() => {
         rotateVal += 5;
         img.style.transform = `rotate( ${rotateVal}deg)`;
 
@@ -232,6 +230,8 @@ export default {
         id: this.intvalID,
         type: 0,
         pageSize: 2000000,
+
+        cursor: new Date(),
       });
 
       console.log(datas.data.data.comments);
@@ -265,7 +265,9 @@ export default {
       }).then(({ data }) => {
         // console.log(data);
         let lyrics = data.lrc.lyric;
+
         let arr = lyrics.split("\n");
+        // console.log(arr);
         let array = [];
         // let obj = {};
         let time = "";
@@ -279,11 +281,15 @@ export default {
           }
         });
         arr = array;
+        // console.log(arr);
         arr.forEach((item) => {
           time = item.split("]")[0];
+          // console.log(time);
           value = item.split("]")[1];
+          // console.log(value);
           //去掉时间里的中括号得到xx:xx.xx
           var t = time.slice(1).split(":");
+          // console.log(t);
           //将结果压入最终数组
           result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value]);
           key.push(parseInt(t[0], 10) * 60 + parseFloat(t[1]));
@@ -323,6 +329,7 @@ export default {
     this.rotate();
     setInterval(() => {
       this.$store.commit("currtime", this.ref.currentTime.toFixed(2));
+      console.log(this.ref.currentTime.toFixed(2));
     }, 1000);
   },
   updated() {},
@@ -348,7 +355,7 @@ export default {
   }
   .songs {
     width: 300px;
-    height: 350px;
+    height: 335px;
     position: absolute;
     transition-delay: 0.5s;
     transition-timing-function: linear;

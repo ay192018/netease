@@ -1,6 +1,6 @@
 <template>
-  <div class="like">
-    <div class="likemusic" v-for="(item, index) in userplaylist" :key="index" >
+  <div class="like animate__bounceInDown animate__animated">
+    <div class="likemusic" v-for="(item, index) in userplaylist" :key="index">
       <div class="img">
         <van-image
           class="toux"
@@ -34,7 +34,6 @@ export default {
     userplaylist: {
       type: Array,
       required: true,
-      
     },
   },
   data() {

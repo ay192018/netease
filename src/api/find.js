@@ -1,10 +1,12 @@
 import http from "@/utils/http.js";
+
 export const getbanner = (type = 2) => {
   return http({
     method: "GET",
     url: `/banner?type=${type}`,
   });
 };
+
 export const getrecommendsong = (limit = 3000) => {
   return http({
     method: "GET",
@@ -74,13 +76,13 @@ export const getallsongs = (params) => {
   return http({
     method: "GET",
     url: "/song/detail",
-    params
+    params,
   });
 };
 export const gethome = (params) => {
   return http({
     method: "GET",
     url: "/homepage/block/page",
-    params
+    params,
   });
 };

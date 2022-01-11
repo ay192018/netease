@@ -7,6 +7,7 @@ const http = axios.create({
     withCredentials: true,
   },
 });
+
 http.interceptors.request.use(
   function (config) {
     // Do something before request is sent

@@ -50,3 +50,11 @@ export const grtlogout = () => {
     url: "/logout",
   });
 };
+export const Historyplay = (params) => {
+  //历史播放
+  return http({
+    method: "GET",
+    url: "/user/record",
+    params,
+  });
+};
