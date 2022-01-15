@@ -44,15 +44,46 @@
           name="like"
           @click="nolikes"
         />
-        <van-icon size="22" color="#97a0a2" name="down" />
+        <van-icon size="22" color="#97a0a2" name="down" @click="value++" />
         <van-icon size="22" color="#97a0a2" name="chat-o" @click="go" />
         <van-icon size="22" color="#97a0a2" name="ellipsis" />
       </div>
       <div class="progress">
-        <van-slider v-model="value" @change="onChange" step="0.01" :max="1" />
+        <div>{{ mintime }}</div>
+        <van-slider
+          v-model="value"
+          bar-height="1px"
+          button-size="15"
+          active-color="red"
+          inactive-color="#fff"
+          @change="onChange"
+          step="0.01"
+          :max="maxtime"
+        />
+        <div>{{ currtimes }}</div>
       </div>
       <div class="play">
-        <van-icon color="#97a0a2" size="28" name="replay" />
+        <van-icon
+          color="#97a0a2"
+          size="28"
+          name="replay"
+          v-if="playmodel === 1"
+          @click="platstyle"
+        />
+        <van-icon
+          name="exchange"
+          color="#97a0a2"
+          size="28"
+          v-else-if="playmodel === 0"
+          @click="platstyle"
+        />
+        <van-icon
+          color="#97a0a2"
+          v-else
+          size="28"
+          name="setting-o"
+          @click="platstyle"
+        />
         <van-icon
           color="#97a0a2"
           size="28"
@@ -114,6 +145,28 @@ import { debounce } from "lodash";
 import { gethotcomment, getlike, getnewcomment } from "@/api/comment.js";
 import Comment from "@/components/comment/";
 import { mapState, mapGetters } from "vuex";
+const realFormatSecond = (second) => {
+  const secondType = typeof second;
+
+  if (secondType === "number" || secondType === "string") {
+    second = parseInt(second);
+
+    const hours = Math.floor(second / 3600);
+
+    second = second - hours * 3600;
+    const mimute = Math.floor(second / 60);
+    second = second - mimute * 60;
+
+    return ("0" + mimute).slice(-2) + ":" + ("0" + second).slice(-2);
+  } else {
+    return "00:00";
+  }
+};
+const random = (m, n) => {
+  const num = Math.floor(Math.random() * (m - n) + n);
+  return num;
+};
+
 export default {
   name: "playmusic",
   components: {
@@ -125,7 +178,7 @@ export default {
       show: false, //弹出层开关
       minishow: false, //评论弹出层开关
       like: false, //是否收藏
-      value: 1, //播放进度
+      value: 0, //播放进度
       songs: true, //歌词的切换
       gc: null,
       key: [],
@@ -134,11 +187,16 @@ export default {
       hotComments: [], //最热评论
       tuijiancooments: [], //推荐评论
       id: this.intvalID,
+      mintime: "",
     };
   },
   props: {
     closes: {
       type: Function,
+      required: true,
+    },
+    duration: {
+      type: [Number, String],
       required: true,
     },
   },
@@ -152,8 +210,14 @@ export default {
       "isPlaying",
       "ref",
       "currtime",
+      "playmodel",
     ]),
-    // ...mapGetters(["Lyriclist"]),
+    currtimes() {
+      return realFormatSecond(this.duration);
+    },
+    maxtime() {
+      return parseInt(this.duration);
+    },
   },
 
   methods: {
@@ -175,24 +239,49 @@ export default {
       }, 100);
     },
     goplay(num) {
-      // console.log(num);
-      // console.log(this.playlist, this.currentPlay, this.intvalID);
-
-      let index = this.currentPlay + num;
-
-      if (index < 0) {
-        index = this.playlist.length - 1;
-      } else if (index == this.playlist.length) {
-        index = 0;
+      let index = 0;
+      if (this.playmodel === 0) {
+        index = this.currentPlay + num;
+        if (index >= this.playlist.length) {
+          this.$toast.fail("没有下一首咯");
+          return;
+        }
+      } else if (this.playmodel === 1) {
+        index = random(
+          0,
+          this.playlist.length - 1 || this.searchlist.length - 1
+        );
+        if (index >= this.playlist.length) {
+          this.$toast.fail("没有下一首咯");
+          return;
+        }
       }
-      if (this.isPlaying == false) {
-        this.$store.commit("switchPlayPause");
+
+      if (this.ref.paused) {
+        this.$store.commit("setcurrentPlay", index);
+        this.$store.commit(
+          "setintvalID",
+          this.$store.state.playlist[this.currentPlay].id
+        );
+        this.$nextTick(() => {
+          this.ref.play();
+          this.$store.commit("switchPlayPause");
+        });
+      } else {
+        this.$nextTick(() => {
+          this.$store.commit("switchPlayPause");
+          this.ref.pause();
+        });
+        this.$store.commit("setcurrentPlay", index);
+        this.$store.commit(
+          "setintvalID",
+          this.$store.state.playlist[this.currentPlay].id
+        );
+        this.$nextTick(() => {
+          this.$store.commit("switchPlayPause");
+          this.ref.play();
+        });
       }
-      this.$store.commit("setcurrentPlay", index);
-      this.$store.commit(
-        "setintvalID",
-        this.$store.state.playlist[this.currentPlay].id
-      );
     },
 
     async likes() {
@@ -201,7 +290,7 @@ export default {
         id: this.intvalID,
         like: true,
       });
-      // console.log(this.playlist);
+
       this.$toast.success("已添加到我喜欢的音乐");
     },
     async nolikes() {
@@ -214,14 +303,7 @@ export default {
       // console.log(data);
     },
     onChange(value) {
-      this.$toast("当前音量：" + value * 100);
-      this.ref.volume = value;
-
-      console.log(this.ref.currentTime);
-      // this.$nextTick(() => {
-      //   this.ref.fastSeek(5);
-      // });
-      // this.ref.duration
+      this.ref.currentTime = value;
     },
     async go() {
       this.minishow = true;
@@ -298,11 +380,24 @@ export default {
         this.key = key;
       });
     },
+    platstyle() {
+      if (this.playmodel === 0) {
+        this.$store.commit("playmodel", 1);
+        this.$toast("随机播放");
+      } else if (this.playmodel === 1) {
+        this.$store.commit("playmodel", 2);
+        this.ref.loop = true;
+        this.$toast("循环播放");
+      } else {
+        this.ref.loop = false;
+        this.$store.commit("playmodel", 0);
+        this.$toast("顺序播放");
+      }
+    },
   },
   watch: {
     intvalID: {
       handler(n, old) {
-        // console.log(n, old);
         this.monitor();
       },
       immediate: true,
@@ -310,17 +405,8 @@ export default {
 
     currtime: {
       handler: debounce(function (newval, oldval) {
-        // console.log(newval, oldval);
         let p = document.querySelector(".active");
-
         this.$refs.box.scrollTop = p.offsetTop - 150;
-
-        // if (
-        //   this.currtime >= this.key[index] &&
-        //   this.currtime < this.key[index + 1]
-        // ) {
-        //   console.log(1);
-        // }
       }, 300),
       immediate: true,
     },
@@ -329,7 +415,8 @@ export default {
     this.rotate();
     setInterval(() => {
       this.$store.commit("currtime", this.ref.currentTime.toFixed(2));
-      console.log(this.ref.currentTime.toFixed(2));
+      this.value = parseInt(this.ref.currentTime);
+      this.mintime = realFormatSecond(parseInt(this.ref.currentTime));
     }, 1000);
   },
   updated() {},
@@ -416,6 +503,20 @@ export default {
     left: 0;
     right: 0;
     top: 0;
+  }
+  .progress {
+    margin: 0 auto;
+    width: 95vw;
+    display: flex;
+    align-items: center;
+    & div {
+      font-size: 15px;
+      color: #f6f7f8;
+    }
+  }
+  /deep/ .van-slider {
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }
 </style>

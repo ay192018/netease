@@ -84,7 +84,7 @@ export default {
       this.$store.commit("setplaylist", this.songs);
       this.$nextTick(() => {
         if (this.ref.paused) {
-          this.ref.autoplay = true;
+      
           this.ref.play();
           if (this.isPlaying == false) {
             this.$store.commit("switchPlayPause");

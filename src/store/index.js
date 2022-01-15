@@ -59,6 +59,7 @@ export default new Vuex.Store({
     profile: JSON.parse(window.localStorage.getItem("profile")), //profile
     userxinxi: {}, //用户详情信息
     currtime: "", //当前音乐时间
+    playmodel: 0, //0,顺序播放，1随机播放，2循环播放
   },
 
   mutations: {
@@ -71,6 +72,7 @@ export default new Vuex.Store({
 
     setcurrentPlay(state, data) {
       //切换歌曲
+
       state.currentPlay = data;
     },
     setintvalID(state, data) {
@@ -118,6 +120,9 @@ export default new Vuex.Store({
     // getuserid(state, data) {
     //   state.userid = data;
     // },
+    playmodel(state, data) {
+      state.playmodel = data;
+    },
   },
   actions: {},
   modules: {},

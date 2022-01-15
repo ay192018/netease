@@ -33,14 +33,14 @@
         @click="pause"
         v-show="isPlaying"
       />
-      <van-icon name="points" size="25" color="#6c6c6c" />
+      <van-icon name="bars" size="25" color="#6c6c6c" />
     </div>
     <audio
       class="audios"
       ref="getaudio"
-      controls="controls"
-      loop
-      hidden
+      @ended="ended"
+      @error="error"
+      @loadedmetadata="onLoadedmetadata"
       :src="`https://music.163.com/song/media/outer/url?id=${playlist[currentPlay].id}.mp3`"
     ></audio>
     <div class="getContainer">
@@ -73,6 +73,7 @@
           :pause="pause"
           :closes="closes"
           ref="Playmusic"
+          :duration="duration"
         />
       </van-popup>
     </div>
@@ -82,16 +83,29 @@
 <script>
 import Playmusic from "./playmusic.vue";
 import { mapState } from "vuex";
+const random = (m, n) => {
+  const num = Math.floor(Math.random() * (m - n) + n);
+  return num;
+};
+
 export default {
   name: "audios",
   components: { Playmusic },
   computed: {
-    ...mapState(["playlist", "currentPlay", "intvalID", "isPlaying"]),
+    ...mapState([
+      "playlist",
+      "currentPlay",
+      "intvalID",
+      "isPlaying",
+      "ref",
+      "searchlist",
+      "playmodel",
+    ]),
   },
   data() {
     return {
       show: false,
-      audio: this.$refs.getaudio,
+      duration: "",
     };
   },
 
@@ -99,39 +113,16 @@ export default {
     play() {
       if (this.$refs.getaudio.paused) {
         this.$store.commit("switchPlayPause");
-        // console.log([this.$refs.getaudio]);
-        this.$refs.getaudio.autoplay = true;
         this.$store.commit("setintvalID", this.playlist[this.currentPlay].id);
         this.$refs.getaudio.play();
       }
-
-      // this.paused = this.$refs.getaudio.paused;
-
-      // console.log(this.playlist[this.currentPlay].id);
-
-      // this.$store.dispatch("actisPlaying", this.$refs.getaudio.paused);
     },
     pause() {
       if (!this.$refs.getaudio.paused) {
         this.$store.commit("switchPlayPause");
-        // console.log(this.isPlaying);
         this.$refs.getaudio.pause();
       }
-      // console.log(this.$refs.getaudio.paused);
-
-      // this.paused = this.$refs.getaudio.paused;
     },
-    // switchPlayPause() {
-    //   if (this.$refs.getaudio.paused) {
-    //     this.$refs.getaudio.play();
-    //     this.$store.commit("switchPlayPause", !this.isPlaying);
-    //     // console.log("播放");
-    //   } else {
-    //     this.$refs.getaudio.pause();
-    //     this.$store.commit("switchPlayPause", !this.isPlaying);
-    //     // console.log("暂停");
-    //   }
-    // },
     rotate() {
       let rotateVal = 0;
       let img = this.$refs.img;
@@ -141,21 +132,90 @@ export default {
         img.style.transition = "0.1s linear";
       }, 300);
     },
-    // updatetime() {
-    //   this.$store.state.intvalID = setInterval(() => {
-    //     this.$store.commit("setcurrent", this.$refs.getaudio.currentTime);
-    //   }, 1000);
-    // },
-
     closes() {
       this.show = false;
     },
-  },
-  watch: {
-    audio(ne, old) {
-      console.log();
+    ended() {
+      this.$nextTick(() => {
+        this.$store.commit("switchPlayPause");
+        this.$refs.getaudio.pause();
+      });
+      if (this.playmodel === 0) {
+        if (this.currentPlay + 1 >= this.playlist.length) {
+          this.$toast.fail("没有下一首咯");
+          return;
+        }
+      } else if (this.playmodel === 1) {
+        if (
+          random(0, this.playlist.length - 1 || this.searchlist.length - 1) >=
+          this.playlist.length
+        ) {
+          this.$toast.fail("没有下一首咯");
+          return;
+        }
+      }
+      this.$toast.loading({
+        message: "加载中...",
+        forbidClick: true,
+      });
+      this.$store.commit("setcurrentPlay", this.currentPlay + 1);
+      this.$store.commit(
+        "setintvalID",
+        this.$store.state.playlist[this.currentPlay].id
+      );
+      this.$nextTick(() => {
+        this.ref.play();
+        if (this.ref.played) {
+          this.$store.commit("switchPlayPause");
+          this.$toast.clear({
+            clearAll: true,
+          });
+        }
+      });
     },
+    error() {
+      this.$toast.fail("歌曲暂时不能播放");
+      this.$nextTick(() => {
+        this.$store.commit("switchPlayPause");
+        this.$refs.getaudio.pause();
+      });
+      if (this.playlist.length < this.currentPlay + 2) {
+        this.$toast.fail("没有下一首咯");
+        return;
+      }
+      this.$toast.loading({
+        message: "加载中...",
+        forbidClick: true,
+      });
+      this.$store.commit("setcurrentPlay", this.currentPlay + 1);
+      this.$store.commit(
+        "setintvalID",
+        this.$store.state.playlist[this.currentPlay].id
+      );
+      this.$nextTick(() => {
+        this.ref.play();
+        if (this.ref.played) {
+          this.$store.commit("switchPlayPause");
+          this.$toast.clear({
+            clearAll: true,
+          });
+        }
+      });
+    },
+    onLoadedmetadata(e) {
+      this.duration = e.target.duration;
+    },
+    // playing(e) {
+    //   if (e.target.paused) {
+    //     this.$store.commit("switchPlayPause");
+    //     console.log(1);
+    //   }
+    //   if (e.target.played) {
+    //     this.$store.commit("switchPlayPause");
+    //   }
+    // },
   },
+
   mounted() {
     this.rotate();
     this.$store.commit("setref", this.$refs.getaudio);

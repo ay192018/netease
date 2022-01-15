@@ -92,7 +92,7 @@
             ? 'animate__animated animate__bounceInLeft'
             : 'animate__animated animate__bounceInRight'
         "
-        @click="getaudio(songs, index)"
+        @click="getaudio(index)"
       >
         <div class="items">
           <div class="item">
@@ -151,15 +151,11 @@ export default {
       this.playlist = data.playlist;
       this.creator = data.playlist.creator;
       this.tracks = data.playlist.tracks;
-      // console.log( this.playlist);
 
       data.playlist.trackIds.forEach((item) => {
-        //  console.log(`${item.id},`);
         this.trackIds.push(item.id);
-        //  return `${item.id}`
       });
-      // this.trackIds=data.playlist.trackIds
-      // console.log(this.trackIds.join());
+
       this.$nextTick(() => {
         this.img();
       });
@@ -170,35 +166,46 @@ export default {
       this.alltracks = res.data.songs;
       // console.log(res.data.songs);
     },
-    // getallsonginfo() {
-    //   getallsonginfo(this.id)
-    //     .then(({ data }) => {
-    //       console.log(data);
-    //       // this.playlist = data.playlist;
-    //       // this.tracks = data.playlist.tracks;
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
-    getaudio(songs, index) {
-      // console.log(this.tracks[this.currentPlay].id);
-      this.$store.commit("setplaylist", this.tracks);
-      this.$nextTick(() => {
-        if (this.ref.paused) {
-          this.ref.autoplay = true;
-          this.ref.play();
 
-          if (this.isPlaying == false) {
-            this.$store.commit("switchPlayPause");
-          }
-        }
+    getaudio(index) {
+      if (
+        this.playlist.length &&
+        this.ref.played &&
+        index === this.currentPlay
+      ) {
+        return;
+      }
+      this.$toast.loading({
+        message: "加载中...",
+        forbidClick: true,
       });
-      this.$store.commit("setcurrentPlay", index);
-      this.$store.commit(
-        "setintvalID",
-        this.$store.state.playlist[this.currentPlay].id
-      );
+      if (this.ref.paused) {
+        this.$store.commit("setplaylist", this.alltracks);
+        this.$store.commit("setcurrentPlay", index);
+        this.$store.commit(
+          "setintvalID",
+          this.$store.state.playlist[this.currentPlay].id
+        );
+        this.$nextTick(() => {
+          this.ref.play();
+          this.$store.commit("switchPlayPause");
+        });
+      } else {
+        this.$nextTick(() => {
+          this.$store.commit("switchPlayPause");
+          this.ref.pause();
+        });
+        this.$store.commit("setplaylist", this.alltracks);
+        this.$store.commit("setcurrentPlay", index);
+        this.$store.commit(
+          "setintvalID",
+          this.$store.state.playlist[this.currentPlay].id
+        );
+        this.$nextTick(() => {
+          this.$store.commit("switchPlayPause");
+          this.ref.play();
+        });
+      }
     },
 
     img() {
@@ -419,7 +426,6 @@ export default {
           color: #5b5b5b;
           font-size: 14px;
           font-weight: bold;
-         
         }
         .songstitle {
           color: #c4c4c4;

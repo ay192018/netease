@@ -1,6 +1,6 @@
 <template>
   <div class="Yuncun animate__fadeInTopLeft animate__animated">
-    Yuncun
+    <h1>开发中......</h1>
   </div>
 </template>
 
@@ -10,6 +10,4 @@ export default {
 };
 </script>
 
-<style>
-
-		</style>
+<style></style>

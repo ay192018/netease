@@ -58,23 +58,37 @@ export default {
   },
   methods: {
     play(index) {
-      // console.log(index);
-      this.$store.commit("setplaylist", this.list);
-      this.$nextTick(() => {
-        if (this.ref.paused) {
-          this.ref.autoplay = true;
-          this.ref.play();
-          if (this.isPlaying == false) {
-            this.$store.commit("switchPlayPause");
-          }
-        }
+      this.$toast.loading({
+        message: "加载中...",
+        forbidClick: true,
       });
-
-      this.$store.commit("setcurrentPlay", index);
-      this.$store.commit(
-        "setintvalID",
-        this.$store.state.playlist[this.currentPlay].id
-      );
+      this.$store.commit("setplaylist", this.list);
+      if (this.ref.paused) {
+        this.setcurrentPlay(index);
+        this.$store.commit("switchPlayPause");
+        this.$store.commit(
+          "setintvalID",
+          this.$store.state.playlist[this.currentPlay].id
+        );
+        this.$nextTick(() => {
+          this.ref.play();
+          this.$store.commit("switchPlayPause");
+        });
+      } else {
+        this.$nextTick(() => {
+          this.$store.commit("switchPlayPause");
+          this.ref.pause();
+        });
+        this.$store.commit("setcurrentPlay", index);
+        this.$store.commit(
+          "setintvalID",
+          this.$store.state.playlist[this.currentPlay].id
+        );
+        this.$nextTick(() => {
+          this.$store.commit("switchPlayPause");
+          this.ref.play();
+        });
+      }
     },
   },
   computed: {

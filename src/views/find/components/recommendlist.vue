@@ -99,7 +99,7 @@ export default {
       this.$nextTick(() => {
         if (this.ref.paused) {
           this.ref.play();
-          this.ref.autoplay = true;
+
           if (this.isPlaying == false) {
             this.$store.commit("switchPlayPause");
           }
